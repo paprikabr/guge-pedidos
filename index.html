@@ -192,7 +192,25 @@ body { background: var(--cream); color: var(--text); font-family: 'Barlow', sans
 </style>
 </head>
 <body>
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-app.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
 
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyBTZreKXo4kClI6epaLpZXzC6lGtFfxmzw",
+    authDomain: "guge-pedidos.firebaseapp.com",
+    projectId: "guge-pedidos",
+    storageBucket: "guge-pedidos.firebasestorage.app",
+    messagingSenderId: "902434016307",
+    appId: "1:902434016307:web:a551b681b5fe121daaa746"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+</script>
 <!-- ══════ HOME ══════ -->
 <div id="screenHome" class="screen active">
   <div class="app-header">
