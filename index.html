@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gugê Jeans — Pedidos</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@700;800&display=swap');
+
+:root {
+  --navy: #2C4272;
+  --navy-dark: #1e2f52;
+  --cream: #EDEAE2;
+  --cream-dark: #dedad0;
+  --white: #fff;
+  --text: #1a1a1a;
+  --muted: #8a8a8a;
+  --border: #d0ccc2;
+  --green: #3a9a54;
+  --green-bg: #edf7ef;
+  --red: #c0392b;
+  --red-bg: #fdf0ee;
+  --yellow-bg: #fffbf0;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--cream); color: var(--text); font-family: 'Barlow', sans-serif; min-height: 100vh; }
+
+/* ─── HEADER ─── */
+.app-header {
+  background: var(--navy);
+  padding: 13px 16px 11px;
+  display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; z-index: 200;
+}
+.logo { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 1.5rem; color: var(--cream); letter-spacing: .1em; line-height: 1; }
+.logo span { display: block; font-size: .5rem; letter-spacing: .4em; color: rgba(237,234,226,.45); margin-top: 2px; }
+.header-action { background: transparent; border: 1px solid rgba(237,234,226,.3); color: rgba(237,234,226,.8); cursor: pointer; font-family: 'Barlow', sans-serif; font-size: .7rem; font-weight: 700; letter-spacing: .1em; padding: 7px 12px; text-transform: uppercase; transition: all .2s; }
+.header-action:hover { border-color: var(--cream); color: var(--cream); }
+
+/* ─── SCREENS ─── */
+.screen { display: none; }
+.screen.active { display: block; }
+
+/* ─── HOME (lista de pedidos) ─── */
+.home-section { padding: 14px 16px 0; }
+.section-label { font-size: .6rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+
+.order-card {
+  background: var(--white); border: 1px solid var(--border); border-left: 3px solid var(--navy);
+  margin-bottom: 8px; cursor: pointer; transition: border-color .15s;
+  display: flex; align-items: center; justify-content: space-between; padding: 11px 12px;
+}
+.order-card:hover { border-left-color: #c9a96e; }
+.order-client { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 1rem; letter-spacing: .08em; text-transform: uppercase; color: var(--navy); }
+.order-meta { font-size: .65rem; color: var(--muted); margin-top: 2px; letter-spacing: .04em; }
+.order-right { text-align: right; }
+.order-progress-text { font-size: .68rem; font-weight: 700; color: var(--navy); }
+.order-mini-bar { height: 3px; background: var(--cream-dark); margin-top: 4px; width: 60px; }
+.order-mini-fill { height: 100%; background: var(--green); transition: width .3s; }
+.missing-badge { background: var(--red); color: #fff; font-size: .58rem; font-weight: 700; letter-spacing: .08em; padding: 2px 6px; text-transform: uppercase; margin-top: 3px; display: inline-block; }
+.empty-home { color: var(--muted); font-size: .82rem; padding: 32px 16px; text-align: center; letter-spacing: .04em; line-height: 1.8; }
+
+/* ─── NEW ORDER FORM ─── */
+.form-header { background: var(--cream-dark); padding: 11px 16px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; }
+.back-btn { background: transparent; border: none; color: var(--navy); cursor: pointer; font-family: 'Barlow', sans-serif; font-size: .75rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; padding: 0; }
+.form-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: .9rem; letter-spacing: .15em; text-transform: uppercase; color: var(--navy); }
+
+.f-section { padding: 12px 16px 0; }
+.f-label { font-size: .6rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; color: var(--muted); margin-bottom: 5px; display: block; }
+.f-input { width: 100%; background: var(--white); border: 1px solid var(--border); color: var(--text); font-family: 'Barlow', sans-serif; font-size: .95rem; padding: 10px 12px; outline: none; transition: border-color .2s; }
+.f-input:focus { border-color: var(--navy); }
+.f-input::placeholder { color: #bbb; }
+
+.grade-tabs { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 4px; }
+.g-tab { background: var(--white); border: 1px solid var(--border); color: var(--muted); cursor: pointer; font-family: 'Barlow', sans-serif; font-size: .68rem; font-weight: 700; letter-spacing: .07em; padding: 6px 10px; text-transform: uppercase; transition: all .15s; user-select: none; }
+.g-tab.active { background: var(--navy); border-color: var(--navy); color: var(--cream); }
+
+.sizes-grid { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 4px; }
+.size-block { background: var(--white); border: 1px solid var(--border); display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 7px 8px; min-width: 50px; }
+.s-label { font-size: .65rem; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; font-weight: 700; }
+.s-input { background: transparent; border: none; border-bottom: 1.5px solid var(--border); color: var(--text); font-family: 'Barlow', sans-serif; font-size: 1rem; font-weight: 700; text-align: center; width: 36px; padding: 2px 0; outline: none; }
+.s-input:focus { border-bottom-color: var(--navy); }
+
+.grade-full-btn { background: transparent; border: 1px dashed var(--border); color: var(--muted); cursor: pointer; font-family: 'Barlow', sans-serif; font-size: .72rem; padding: 7px 12px; width: 100%; margin-top: 6px; transition: all .2s; text-align: left; }
+.grade-full-btn:hover { border-color: var(--navy); color: var(--navy); }
+
+.btn-add-item { background: var(--navy); border: none; color: var(--cream); cursor: pointer; font-family: 'Barlow', sans-serif; font-size: .78rem; font-weight: 700; letter-spacing: .14em; padding: 12px; text-transform: uppercase; width: 100%; margin-top: 12px; transition: background .2s; }
+.btn-add-item:hover { background: var(--navy-dark); }
+
+.divider { border: none; border-top: 1px solid var(--border); margin: 16px 0 0; }
+
+.items-preview { padding: 0 16px; }
+.preview-item { background: var(--white); border: 1px solid var(--border); border-left: 2px solid var(--navy); display: flex; align-items: center; justify-content: space-between; padding: 8px 10px; margin-top: 7px; }
+.pi-code { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: .88rem; letter-spacing: .1em; text-transform: uppercase; color: var(--navy); }
+.pi-detail { font-size: .65rem; color: var(--muted); margin-top: 1px; }
+.pi-remove { background: transparent; border: none; color: var(--muted); cursor: pointer; font-size: .85rem; padding: 2px 4px; transition: color .2s; }
+.pi-remove:hover { color: var(--red); }
+
+.btn-save-order { background: var(--navy); border: none; color: var(--cream); cursor: pointer; font-family: 'Barlow', sans-serif; font-size: .8rem; font-weight: 700; letter-spacing: .14em; padding: 14px; text-transform: uppercase; width: calc(100% - 32px); margin: 14px 16px 90px; display: block; transition: background .2s; }
+.btn-save-order:hover { background: var(--navy-dark); }
+
+/* ─── PEDIDO VIEW (separação) ─── */
+.ped-header { background: var(--navy); padding: 11px 16px; display: flex; align-items: center; gap: 10px; }
+.ped-client { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 1rem; letter-spacing: .1em; text-transform: uppercase; color: var(--cream); }
+.ped-date { font-size: .62rem; color: rgba(237,234,226,.5); margin-top: 1px; letter-spacing: .06em; }
+
+.prog-wrap { padding: 10px 16px 0; }
+.prog-bar-bg { background: var(--cream-dark); height: 5px; }
+.prog-fill-green { height: 100%; background: var(--green); transition: width .3s; float: left; }
+.prog-fill-red { height: 100%; background: var(--red); transition: width .3s; float: left; }
+.prog-stats { display: flex; justify-content: space-between; margin-top: 5px; }
+.prog-stat { font-size: .65rem; font-weight: 700; letter-spacing: .06em; }
+.prog-stat.green { color: var(--green); }
+.prog-stat.red { color: var(--red); }
+.prog-stat.gray { color: var(--muted); }
+
+/* SIZE ROWS */
+.ped-item-card { background: var(--white); border: 1px solid var(--border); border-left: 3px solid var(--navy); margin: 8px 16px 0; overflow: hidden; }
+.ped-item-head { background: var(--cream); border-bottom: 1px solid var(--cream-dark); padding: 9px 11px; }
+.ped-item-code { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: .95rem; letter-spacing: .1em; text-transform: uppercase; color: var(--navy); }
+.ped-item-grade { font-size: .6rem; color: var(--muted); text-transform: uppercase; letter-spacing: .1em; }
+
+.size-rows { display: flex; flex-wrap: wrap; }
+
+.size-row {
+  width: 50%; display: flex; align-items: center; gap: 9px; padding: 9px 11px;
+  border-bottom: 1px solid var(--cream-dark); cursor: pointer; transition: background .15s;
+  position: relative;
+}
+.size-row:nth-child(odd) { border-right: 1px solid var(--cream-dark); }
+.size-row:last-child, .size-row:nth-last-child(2):nth-child(odd) { border-bottom: none; }
+
+.size-row.st-ok   { background: var(--green-bg); }
+.size-row.st-miss { background: var(--red-bg); }
+
+.tap-icon { width: 18px; height: 18px; border: 1.5px solid var(--border); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: .65rem; transition: all .15s; }
+.size-row.st-ok   .tap-icon { background: var(--green); border-color: var(--green); color: #fff; }
+.size-row.st-miss .tap-icon { background: var(--red);   border-color: var(--red);   color: #fff; }
+
+.sr-label { font-size: .8rem; flex: 1; font-weight: 500; }
+.sr-qty   { font-size: .8rem; font-weight: 700; color: var(--navy); }
+.sr-badge { font-size: .58rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.st-ok   .sr-badge { color: var(--green); }
+.st-miss .sr-badge { color: var(--red); }
+
+/* LONG PRESS HINT */
+.hint { font-size: .62rem; color: var(--muted); padding: 8px 16px 0; letter-spacing: .04em; text-align: center; }
+
+/* ACTION BAR */
+.action-bar { background: var(--navy); bottom: 0; left: 0; right: 0; position: fixed; display: flex; gap: 6px; padding: 9px 12px; z-index: 100; }
+.ab-sec { background: transparent; border: 1px solid rgba(237,234,226,.25); color: rgba(237,234,226,.7); cursor: pointer; font-family: 'Barlow', sans-serif; font-size: .68rem; font-weight: 700; letter-spacing: .1em; padding: 9px 10px; text-transform: uppercase; transition: all .2s; flex-shrink: 0; }
+.ab-sec:hover { border-color: var(--cream); color: var(--cream); }
+.ab-pri { background: var(--cream); border: none; color: var(--navy); cursor: pointer; flex: 1; font-family: 'Barlow', sans-serif; font-size: .72rem; font-weight: 800; letter-spacing: .12em; padding: 9px; text-transform: uppercase; transition: opacity .2s; }
+.ab-pri:hover { opacity: .88; }
+
+/* TOAST */
+.toast { background: var(--green); bottom: 72px; color: #fff; font-family: 'Barlow', sans-serif; font-size: .7rem; font-weight: 700; left: 50%; letter-spacing: .1em; opacity: 0; padding: 8px 16px; position: fixed; text-transform: uppercase; transform: translateX(-50%) translateY(8px); transition: all .3s; z-index: 400; pointer-events: none; }
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* PRINT */
+@media print {
+  .app-header, .action-bar, .prog-wrap, .hint, .form-header, #screenHome, #screenNew { display: none !important; }
+  body { background: white; }
+  .ped-header { background: #2C4272 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .size-row.st-ok   { background: #edf7ef !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .size-row.st-miss { background: #fdf0ee !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .ped-item-card { break-inside: avoid; }
+  .print-summary { display: block !important; }
+}
+.print-summary { display: none; padding: 10px 16px; font-size: .72rem; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<!-- ══════════ HOME ══════════ -->
+<div id="screenHome" class="screen active">
+  <div class="app-header">
+    <div>
+      <div class="logo">GUGĒ<span>J E A N S</span></div>
+    </div>
+    <button class="header-action" onclick="goNew()">+ Novo Pedido</button>
+  </div>
+
+  <div class="home-section" style="padding-top:16px">
+    <div class="section-label">Pedidos em Aberto</div>
+    <div id="orderList"><p class="empty-home">Nenhum pedido ainda.<br>Toque em <strong>+ Novo Pedido</strong> para começar.</p></div>
+  </div>
+</div>
+
+<!-- ══════════ NEW ORDER ══════════ -->
+<div id="screenNew" class="screen">
+  <div class="app-header">
+    <div><div class="logo">GUGĒ<span>J E A N S</span></div></div>
+    <button class="header-action" onclick="goHome()">← Voltar</button>
+  </div>
+  <div class="form-header">
+    <div class="form-title">Novo Pedido</div>
+  </div>
+
+  <div class="f-section" style="padding-top:14px">
+    <label class="f-label">Cliente</label>
+    <input class="f-input" type="text" id="newClient" placeholder="Nome da cliente..." />
+  </div>
+
+  <div class="f-section">
+    <label class="f-label">Código / Referência</label>
+    <input class="f-input" type="text" id="newCode" placeholder="Ex: GJ-001, Flare Escuro..." />
+  </div>
+
+  <div class="f-section">
+    <label class="f-label">Tipo de Grade</label>
+    <div class="grade-tabs">
+      <div class="g-tab active" data-grade="casual-pg"  onclick="setGrade(this)">Casual P–G</div>
+      <div class="g-tab"        data-grade="casual-pgg" onclick="setGrade(this)">Casual P–GG</div>
+      <div class="g-tab"        data-grade="j3646"      onclick="setGrade(this)">Jeans 36–46</div>
+      <div class="g-tab"        data-grade="j3844"      onclick="setGrade(this)">Jeans 38–44</div>
+      <div class="g-tab"        data-grade="custom"     onclick="setGrade(this)">Personalizado</div>
+    </div>
+  </div>
+
+  <div class="f-section">
+    <label class="f-label">Quantidades por Tamanho</label>
+    <div class="sizes-grid" id="sizesGrid"></div>
+    <button class="grade-full-btn" onclick="fillFull()">+ Grade completa — 1 peça de cada</button>
+  </div>
+
+  <div class="f-section">
+    <button class="btn-add-item" onclick="addItem()">+ Adicionar Peça</button>
+  </div>
+
+  <hr class="divider">
+  <div style="padding:10px 16px 0; display:flex; align-items:center; justify-content:space-between;">
+    <span style="font-size:.6rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--muted)">Peças no Pedido</span>
+    <span id="newCount" style="font-size:.68rem;font-weight:700;color:var(--navy);letter-spacing:.06em">0 peças</span>
+  </div>
+  <div class="items-preview" id="itemsPreview"></div>
+
+  <button class="btn-save-order" onclick="saveOrder()">Salvar Pedido</button>
+</div>
+
+<!-- ══════════ ORDER VIEW ══════════ -->
+<div id="screenOrder" class="screen">
+  <div class="app-header">
+    <div><div class="logo">GUGĒ<span>J E A N S</span></div></div>
+    <button class="header-action" onclick="goHome()">← Pedidos</button>
+  </div>
+
+  <div class="ped-header">
+    <div>
+      <div class="ped-client" id="viewClient">—</div>
+      <div class="ped-date" id="viewDate">—</div>
+    </div>
+  </div>
+
+  <div class="print-summary" id="printSummary"></div>
+
+  <div class="prog-wrap">
+    <div class="prog-bar-bg" id="progBar" style="overflow:hidden">
+      <div class="prog-fill-green" id="progGreen" style="width:0%"></div>
+      <div class="prog-fill-red"   id="progRed"   style="width:0%"></div>
+    </div>
+    <div class="prog-stats">
+      <span class="prog-stat green" id="statOk">✓ 0 separados</span>
+      <span class="prog-stat red"   id="statMiss">✗ 0 não encontrados</span>
+      <span class="prog-stat gray"  id="statPend">◦ 0 pendentes</span>
+    </div>
+  </div>
+
+  <p class="hint">Toque 1× para <strong style="color:var(--green)">separado</strong> · Toque 2× para <strong style="color:var(--red)">não encontrado</strong> · Toque 3× para desfazer</p>
+
+  <div id="orderItems" style="padding-bottom:80px"></div>
+
+  <div class="action-bar">
+    <button class="ab-sec" onclick="deleteOrder()">Excluir</button>
+    <button class="ab-sec" onclick="copyOrder()">Copiar</button>
+    <button class="ab-pri" onclick="window.print()">⬇ Salvar PDF</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ── GRADES ──
+const GRADES = {
+  'casual-pg':  ['P','M','G'],
+  'casual-pgg': ['P','M','G','GG'],
+  'j3646':      ['36','38','40','42','44','46'],
+  'j3844':      ['38','40','42','44'],
+  'custom':     ['P','M','G','GG','36','38','40','42','44','46'],
+};
+const GL = {'casual-pg':'Casual P–G','casual-pgg':'Casual P–GG','j3646':'Jeans 36–46','j3844':'Jeans 38–44','custom':'Personalizado'};
+
+// ── STATE ──
+let orders = JSON.parse(localStorage.getItem('guge_orders')||'[]');
+let draftItems = [];
+let curGrade = 'casual-pg';
+let curOrderId = null;
+
+function save() { localStorage.setItem('guge_orders', JSON.stringify(orders)); }
+
+// ── NAVIGATION ──
+function show(id) { document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active')); document.getElementById(id).classList.add('active'); window.scrollTo(0,0); }
+
+function goHome()  { show('screenHome'); renderHome(); }
+function goNew()   { draftItems=[]; curGrade='casual-pg'; document.getElementById('newClient').value=''; document.getElementById('newCode').value=''; renderSizes(); renderPreview(); show('screenNew'); }
+function goOrder(id) { curOrderId=id; renderOrderView(); show('screenOrder'); }
+
+// ── HOME ──
+function renderHome() {
+  const el = document.getElementById('orderList');
+  if(!orders.length){ el.innerHTML='<p class="empty-home">Nenhum pedido ainda.<br>Toque em <strong>+ Novo Pedido</strong> para começar.</p>'; return; }
+  el.innerHTML = orders.map(o=>{
+    const stats = calcStats(o);
+    const total = stats.ok+stats.miss+stats.pend;
+    const pctOk   = total>0?Math.round(stats.ok/total*100):0;
+    const pctMiss = total>0?Math.round(stats.miss/total*100):0;
+    return `<div class="order-card" onclick="goOrder('${o.id}')">
+      <div>
+        <div class="order-client">${o.client}</div>
+        <div class="order-meta">${o.date} · ${total} peças · ${o.items.length} ref.</div>
+      </div>
+      <div class="order-right">
+        <div class="order-progress-text">${pctOk}% ok</div>
+        <div class="order-mini-bar"><div class="order-mini-fill" style="width:${pctOk}%"></div></div>
+        ${stats.miss>0?`<div class="missing-badge">✗ ${stats.miss} falta</div>`:''}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ── NEW ORDER FORM ──
+function setGrade(el) {
+  document.querySelectorAll('.g-tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  curGrade = el.dataset.grade;
+  renderSizes();
+}
+
+function renderSizes() {
+  document.getElementById('sizesGrid').innerHTML = GRADES[curGrade].map(s=>`
+    <div class="size-block">
+      <span class="s-label">${s}</span>
+      <input class="s-input" type="number" min="0" max="99" placeholder="0" data-size="${s}" />
+    </div>`).join('');
+}
+
+function fillFull() { document.querySelectorAll('.s-input').forEach(i=>i.value=1); }
+
+function addItem() {
+  const code = document.getElementById('newCode').value.trim();
+  if(!code){ toast('Informe o código da peça'); return; }
+  const sizes={};
+  document.querySelectorAll('.s-input').forEach(i=>{ const q=parseInt(i.value)||0; if(q>0)sizes[i.dataset.size]=q; });
+  if(!Object.keys(sizes).length){ toast('Informe ao menos um tamanho'); return; }
+  draftItems.push({code, grade:curGrade, sizes, status:{}, id: Date.now()});
+  document.getElementById('newCode').value='';
+  document.querySelectorAll('.s-input').forEach(i=>i.value='');
+  renderPreview();
+}
+
+function removeDraft(id) { draftItems=draftItems.filter(i=>i.id!==id); renderPreview(); }
+
+function renderPreview() {
+  const el = document.getElementById('itemsPreview');
+  let total=0; draftItems.forEach(i=>Object.values(i.sizes).forEach(q=>total+=q));
+  document.getElementById('newCount').textContent=total+' peças';
+  if(!draftItems.length){ el.innerHTML=''; return; }
+  el.innerHTML = draftItems.map(item=>{
+    const sizesText = Object.entries(item.sizes).map(([s,q])=>`${s}:${q}`).join('  ');
+    return `<div class="preview-item">
+      <div>
+        <div class="pi-code">${item.code}</div>
+        <div class="pi-detail">${GL[item.grade]} · ${sizesText}</div>
+      </div>
+      <button class="pi-remove" onclick="removeDraft(${item.id})">✕</button>
+    </div>`;
+  }).join('');
+}
+
+function saveOrder() {
+  const client = document.getElementById('newClient').value.trim();
+  if(!client){ toast('Informe o nome da cliente'); return; }
+  if(!draftItems.length){ toast('Adicione ao menos uma peça'); return; }
+  const order = {
+    id: 'o'+Date.now(),
+    client,
+    date: new Date().toLocaleDateString('pt-BR'),
+    items: draftItems.map(i=>({...i, status:{}}))
+  };
+  orders.unshift(order);
+  save();
+  toast('Pedido salvo!');
+  setTimeout(()=>goHome(), 600);
+}
+
+// ── ORDER VIEW ──
+function renderOrderView() {
+  const o = orders.find(x=>x.id===curOrderId);
+  if(!o) return;
+  document.getElementById('viewClient').textContent = o.client;
+  document.getElementById('viewDate').textContent = o.date+' · '+totalPecas(o)+' peças · '+o.items.length+' referências';
+  document.getElementById('printSummary').textContent = `GUGĒ JEANS — Cliente: ${o.client} · Data: ${o.date} · Total: ${totalPecas(o)} peças`;
+
+  // items
+  const el = document.getElementById('orderItems');
+  el.innerHTML = o.items.map(item=>`
+    <div class="ped-item-card">
+      <div class="ped-item-head">
+        <div class="ped-item-code">${item.code}</div>
+        <div class="ped-item-grade">${GL[item.grade]||''}</div>
+      </div>
+      <div class="size-rows">
+        ${Object.entries(item.sizes).map(([s,q])=>{
+          const st = (item.status&&item.status[s])||0; // 0=pend 1=ok 2=miss
+          const cls = st===1?'st-ok':st===2?'st-miss':'';
+          const icon = st===1?'✓':st===2?'✗':'';
+          const badge = st===1?'Separado':st===2?'Não encontrado':'';
+          return `<div class="size-row ${cls}" data-item="${item.id}" data-size="${s}" onclick="tapSize(this)">
+            <div class="tap-icon">${icon}</div>
+            <span class="sr-label">Tam. ${s}</span>
+            <span class="sr-qty">${q} pc</span>
+            <span class="sr-badge">${badge}</span>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>`).join('');
+  updateProgress(o);
+}
+
+function tapSize(el) {
+  const o = orders.find(x=>x.id===curOrderId);
+  if(!o) return;
+  const itemId = parseInt(el.dataset.item);
+  const size = el.dataset.size;
+  const item = o.items.find(i=>i.id===itemId);
+  if(!item) return;
+  if(!item.status) item.status={};
+  const cur = item.status[size]||0;
+  item.status[size] = (cur+1)%3; // 0→1→2→0
+  save();
+  renderOrderView();
+}
+
+function calcStats(o) {
+  let ok=0, miss=0, pend=0;
+  o.items.forEach(item=>{
+    Object.entries(item.sizes).forEach(([s,q])=>{
+      const st=(item.status&&item.status[s])||0;
+      if(st===1) ok+=q; else if(st===2) miss+=q; else pend+=q;
+    });
+  });
+  return {ok,miss,pend};
+}
+
+function totalPecas(o) {
+  let t=0; o.items.forEach(i=>Object.values(i.sizes).forEach(q=>t+=q)); return t;
+}
+
+function updateProgress(o) {
+  const s=calcStats(o), total=s.ok+s.miss+s.pend;
+  const pOk   = total>0?Math.round(s.ok/total*100):0;
+  const pMiss = total>0?Math.round(s.miss/total*100):0;
+  document.getElementById('progGreen').style.width = pOk+'%';
+  document.getElementById('progRed').style.width   = pMiss+'%';
+  document.getElementById('statOk').textContent   = `✓ ${s.ok} separados`;
+  document.getElementById('statMiss').textContent = `✗ ${s.miss} não encontrados`;
+  document.getElementById('statPend').textContent = `◦ ${s.pend} pendentes`;
+}
+
+function deleteOrder() {
+  const o=orders.find(x=>x.id===curOrderId);
+  if(!confirm(`Excluir pedido de ${o?o.client:''}?`)) return;
+  orders=orders.filter(x=>x.id!==curOrderId);
+  save(); goHome();
+}
+
+function copyOrder() {
+  const o=orders.find(x=>x.id===curOrderId);
+  if(!o) return;
+  let t=`GUGĒ JEANS — PEDIDO\n${'─'.repeat(34)}\nCliente: ${o.client}\nData: ${o.date}\n${'─'.repeat(34)}\n`;
+  o.items.forEach((item,i)=>{
+    t+=`\n${String(i+1).padStart(2,'0')}. ${item.code} [${GL[item.grade]}]\n`;
+    Object.entries(item.sizes).forEach(([s,q])=>{
+      const st=(item.status&&item.status[s])||0;
+      const label = st===1?' ✓':st===2?' ✗ NÃO ENCONTRADO':'';
+      t+=`    Tam.${s.padEnd(4)} — ${q}pc${label}\n`;
+    });
+  });
+  const stats=calcStats(o);
+  t+=`\n${'─'.repeat(34)}\nTotal: ${totalPecas(o)} peças\nSeparados: ${stats.ok} · Faltando: ${stats.miss} · Pendente: ${stats.pend}\n`;
+  navigator.clipboard.writeText(t).then(()=>toast('Copiado!'));
+}
+
+function toast(msg) {
+  const el=document.getElementById('toast');
+  el.textContent=msg; el.classList.add('show');
+  setTimeout(()=>el.classList.remove('show'),2200);
+}
+
+// ── INIT ──
+renderSizes();
+renderHome();
+</script>
+</body>
+</html>
