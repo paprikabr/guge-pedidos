@@ -27,29 +27,42 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { background: var(--cream); color: var(--text); font-family: 'Barlow', sans-serif; min-height: 100vh; }
 
-.app-header {
-  background: var(--navy); padding: 13px 16px 11px;
-  display: flex; align-items: center; justify-content: space-between;
-  position: sticky; top: 0; z-index: 200;
-}
-.logo { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 1.5rem; color: var(--cream); letter-spacing: .1em; line-height: 1; }
-.logo span { display: block; font-size: .5rem; letter-spacing: .4em; color: rgba(237,234,226,.45); margin-top: 2px; }
-.header-action { background: transparent; border: 1px solid rgba(237,234,226,.3); color: rgba(237,234,226,.8); cursor: pointer; font-family: 'Barlow', sans-serif; font-size: .7rem; font-weight: 700; letter-spacing: .1em; padding: 7px 12px; text-transform: uppercase; transition: all .2s; }
-.header-action:hover { border-color: var(--cream); color: var(--cream); }
-
-.screen { display: none; }
-.screen.active { display: block; }
-
 /* ── LOADING ── */
 .loading-overlay { position: fixed; inset: 0; background: var(--navy); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 999; transition: opacity .4s; }
 .loading-overlay.hidden { opacity: 0; pointer-events: none; }
 .loading-logo { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 2.8rem; color: var(--cream); letter-spacing: .12em; }
-.loading-sub { font-size: .55rem; letter-spacing: .45em; color: rgba(237,234,226,.4); text-transform: uppercase; margin-top: 4px; }
+.loading-sub  { font-size: .55rem; letter-spacing: .45em; color: rgba(237,234,226,.4); text-transform: uppercase; margin-top: 4px; }
 .loading-dots { display: flex; gap: 6px; margin-top: 28px; }
 .loading-dots span { width: 7px; height: 7px; background: rgba(237,234,226,.4); border-radius: 50%; animation: pulse 1.2s infinite; }
 .loading-dots span:nth-child(2) { animation-delay: .2s; }
 .loading-dots span:nth-child(3) { animation-delay: .4s; }
 @keyframes pulse { 0%,80%,100%{opacity:.3} 40%{opacity:1} }
+
+/* ── LOGIN ── */
+.login-screen { position: fixed; inset: 0; background: var(--navy); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 500; padding: 32px 24px; }
+.login-screen.hidden { display: none; }
+.login-logo { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 3rem; color: var(--cream); letter-spacing: .12em; line-height: 1; }
+.login-sub   { font-size: .55rem; letter-spacing: .45em; color: rgba(237,234,226,.4); text-transform: uppercase; margin-top: 4px; margin-bottom: 40px; }
+.login-box   { width: 100%; max-width: 320px; }
+.login-label { font-size: .62rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; color: rgba(237,234,226,.55); margin-bottom: 6px; display: block; }
+.login-input { width: 100%; background: rgba(255,255,255,.08); border: 1px solid rgba(237,234,226,.2); color: var(--cream); font-family: 'Barlow', sans-serif; font-size: 1rem; padding: 12px 14px; outline: none; transition: border-color .2s; letter-spacing: .04em; }
+.login-input:focus { border-color: rgba(237,234,226,.6); }
+.login-input::placeholder { color: rgba(237,234,226,.25); }
+.login-btn { width: 100%; background: var(--cream); border: none; color: var(--navy); cursor: pointer; font-family: 'Barlow', sans-serif; font-size: .82rem; font-weight: 800; letter-spacing: .16em; padding: 14px; text-transform: uppercase; margin-top: 12px; transition: opacity .2s; }
+.login-btn:hover { opacity: .88; }
+.login-error { color: #ff8a80; font-size: .75rem; margin-top: 10px; text-align: center; min-height: 20px; letter-spacing: .03em; }
+
+/* ── APP ── */
+.app-header { background: var(--navy); padding: 13px 16px 11px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 200; }
+.logo { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 1.5rem; color: var(--cream); letter-spacing: .1em; line-height: 1; }
+.logo span { display: block; font-size: .5rem; letter-spacing: .4em; color: rgba(237,234,226,.45); margin-top: 2px; }
+.header-actions { display: flex; gap: 6px; }
+.header-action { background: transparent; border: 1px solid rgba(237,234,226,.3); color: rgba(237,234,226,.8); cursor: pointer; font-family: 'Barlow', sans-serif; font-size: .68rem; font-weight: 700; letter-spacing: .1em; padding: 7px 11px; text-transform: uppercase; transition: all .2s; }
+.header-action:hover { border-color: var(--cream); color: var(--cream); }
+.header-action.logout { border-color: rgba(237,234,226,.15); color: rgba(237,234,226,.4); }
+
+.screen { display: none; }
+.screen.active { display: block; }
 
 /* ── HOME ── */
 .home-section { padding: 14px 16px 0; }
@@ -111,7 +124,7 @@ body { background: var(--cream); color: var(--text); font-family: 'Barlow', sans
 .prog-stat.orange { color: var(--orange); }
 .prog-stat.red    { color: var(--red); }
 .prog-stat.gray   { color: var(--muted); }
-.hint { font-size: .62rem; color: var(--muted); padding: 7px 16px 0; letter-spacing: .03em; text-align: center; line-height: 1.5; }
+.hint { font-size: .62rem; color: var(--muted); padding: 7px 16px 0; text-align: center; line-height: 1.5; }
 .ped-item-card { background: var(--white); border: 1px solid var(--border); border-left: 3px solid var(--navy); margin: 8px 16px 0; overflow: hidden; }
 .ped-item-head { background: var(--cream); border-bottom: 1px solid var(--cream-dark); padding: 9px 11px; display: flex; align-items: center; justify-content: space-between; }
 .ped-item-code { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: .95rem; letter-spacing: .1em; text-transform: uppercase; color: var(--navy); }
@@ -133,7 +146,7 @@ body { background: var(--cream); color: var(--text); font-family: 'Barlow', sans
 .st-partial .sr-status { color: var(--orange); }
 .st-zero    .sr-status { color: var(--red); }
 .qty-group { display: flex; align-items: center; flex-shrink: 0; }
-.qty-btn { width: 28px; height: 28px; border: 1px solid var(--border); background: var(--cream); color: var(--text); font-size: 1.1rem; cursor: pointer; font-family: 'Barlow', sans-serif; font-weight: 700; display: flex; align-items: center; justify-content: center; transition: background .15s; user-select: none; -webkit-user-select: none; }
+.qty-btn { width: 28px; height: 28px; border: 1px solid var(--border); background: var(--cream); color: var(--text); font-size: 1.1rem; cursor: pointer; font-weight: 700; display: flex; align-items: center; justify-content: center; transition: background .15s; user-select: none; -webkit-user-select: none; }
 .qty-btn:active { background: var(--cream-dark); }
 .qty-val { width: 34px; height: 28px; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: var(--white); text-align: center; font-family: 'Barlow', sans-serif; font-size: .9rem; font-weight: 700; color: var(--navy); line-height: 28px; }
 .st-full    .qty-btn { border-color: var(--green);  background: var(--green-bg); }
@@ -143,7 +156,6 @@ body { background: var(--cream); color: var(--text); font-family: 'Barlow', sans
 .st-zero    .qty-btn { border-color: var(--red);    background: var(--red-bg); }
 .st-zero    .qty-val { border-color: var(--red);    color: var(--red); }
 
-/* ── SAVING INDICATOR ── */
 .save-indicator { position: fixed; top: 58px; right: 12px; background: var(--navy); color: var(--cream); font-size: .62rem; font-weight: 700; letter-spacing: .1em; padding: 4px 10px; text-transform: uppercase; z-index: 300; opacity: 0; transition: opacity .3s; pointer-events: none; }
 .save-indicator.show { opacity: 1; }
 
@@ -157,7 +169,7 @@ body { background: var(--cream); color: var(--text); font-family: 'Barlow', sans
 .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
 @media print {
-  .app-header, .action-bar, .hint, #screenHome, #screenNew, .prog-wrap, .save-indicator, .loading-overlay { display: none !important; }
+  .app-header, .action-bar, .hint, #screenHome, #screenNew, .prog-wrap, .save-indicator, .loading-overlay, .login-screen { display: none !important; }
   body { background: white; }
   .ped-header { background: #2C4272 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   .size-row.st-full    { background: #edf7ef !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
@@ -180,13 +192,28 @@ body { background: var(--cream); color: var(--text); font-family: 'Barlow', sans
   <div class="loading-dots"><span></span><span></span><span></span></div>
 </div>
 
+<!-- LOGIN -->
+<div class="login-screen hidden" id="loginScreen">
+  <div class="login-logo">GUGĒ</div>
+  <div class="login-sub">J E A N S</div>
+  <div class="login-box">
+    <label class="login-label">Senha de acesso</label>
+    <input class="login-input" type="password" id="loginInput" placeholder="Digite a senha..." onkeydown="if(event.key==='Enter')doLogin()" />
+    <button class="login-btn" onclick="doLogin()">Entrar</button>
+    <div class="login-error" id="loginError"></div>
+  </div>
+</div>
+
 <div class="save-indicator" id="saveIndicator">Salvando...</div>
 
-<!-- ══════ HOME ══════ -->
+<!-- HOME -->
 <div id="screenHome" class="screen active">
   <div class="app-header">
     <div><div class="logo">GUGĒ<span>J E A N S</span></div></div>
-    <button class="header-action" onclick="goNew()">+ Novo Pedido</button>
+    <div class="header-actions">
+      <button class="header-action" onclick="goNew()">+ Novo Pedido</button>
+      <button class="header-action logout" onclick="doLogout()" title="Sair">Sair</button>
+    </div>
   </div>
   <div class="home-section" style="padding-top:16px">
     <div class="section-label">Pedidos Salvos</div>
@@ -194,7 +221,7 @@ body { background: var(--cream); color: var(--text); font-family: 'Barlow', sans
   </div>
 </div>
 
-<!-- ══════ NEW ORDER ══════ -->
+<!-- NEW ORDER -->
 <div id="screenNew" class="screen">
   <div class="app-header">
     <div><div class="logo">GUGĒ<span>J E A N S</span></div></div>
@@ -236,7 +263,7 @@ body { background: var(--cream); color: var(--text); font-family: 'Barlow', sans
   <button class="btn-save-order" onclick="saveOrder()">Salvar Pedido</button>
 </div>
 
-<!-- ══════ ORDER VIEW ══════ -->
+<!-- ORDER VIEW -->
 <div id="screenOrder" class="screen">
   <div class="app-header">
     <div><div class="logo">GUGĒ<span>J E A N S</span></div></div>
@@ -271,14 +298,15 @@ body { background: var(--cream); color: var(--text); font-family: 'Barlow', sans
 
 <div class="toast" id="toast"></div>
 
-<!-- ══════ FIREBASE + APP LOGIC ══════ -->
 <script type="module">
-import { initializeApp }                          from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { initializeApp }                      from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword,
+         signOut, onAuthStateChanged }        from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 import { getFirestore, collection, doc,
          addDoc, setDoc, deleteDoc,
-         onSnapshot, query, orderBy }             from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+         onSnapshot, query, orderBy }         from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-// ── Firebase config ──
+// ── Config ──
 const firebaseConfig = {
   apiKey:            "AIzaSyBTZreKXo4kClI6epaLpZXzC6lGtFfxmzw",
   authDomain:        "guge-pedidos.firebaseapp.com",
@@ -288,8 +316,13 @@ const firebaseConfig = {
   appId:             "1:902434016307:web:a551b681b5fe121daaa746"
 };
 
-const app = initializeApp(firebaseConfig);
-const db  = getFirestore(app);
+// Conta interna usada para autenticar
+const APP_EMAIL    = "app@guge-pedidos.internal";
+const APP_PASSWORD = "Pamil,12";
+
+const app  = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db   = getFirestore(app);
 const ordersCol = collection(db, "pedidos");
 
 // ── Grades ──
@@ -306,11 +339,66 @@ const GL = {
 };
 
 // ── State ──
-let orders    = [];
+let orders     = [];
 let draftItems = [];
 let curGrade   = 'casual-pg';
 let curOrderId = null;
 let saveTimer  = null;
+let unsubscribe = null;
+
+// ── Auth flow ──
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    // Logged in — start listening
+    document.getElementById('loginScreen').classList.add('hidden');
+    document.getElementById('loadingOverlay').classList.add('hidden');
+    startListening();
+  } else {
+    // Not logged in — show login
+    if (unsubscribe) { unsubscribe(); unsubscribe = null; }
+    document.getElementById('loadingOverlay').classList.add('hidden');
+    document.getElementById('loginScreen').classList.remove('hidden');
+  }
+});
+
+function startListening() {
+  if (unsubscribe) unsubscribe();
+  const q = query(ordersCol, orderBy("createdAt", "desc"));
+  unsubscribe = onSnapshot(q, (snap) => {
+    orders = snap.docs.map(d => ({ firestoreId: d.id, ...d.data() }));
+    renderHome();
+    if (curOrderId) renderOrderView();
+  }, (err) => {
+    console.error(err);
+    toast('Erro ao carregar dados', 'var(--red)');
+  });
+}
+
+// ── Login / Logout ──
+window.doLogin = async function() {
+  const senha = document.getElementById('loginInput').value;
+  const errEl = document.getElementById('loginError');
+  errEl.textContent = '';
+  if (!senha) { errEl.textContent = 'Digite a senha.'; return; }
+  // Map user password → firebase credentials
+  if (senha !== APP_PASSWORD) {
+    errEl.textContent = 'Senha incorreta.';
+    document.getElementById('loginInput').value = '';
+    return;
+  }
+  try {
+    await signInWithEmailAndPassword(auth, APP_EMAIL, APP_PASSWORD);
+  } catch(e) {
+    errEl.textContent = 'Erro ao entrar. Tente novamente.';
+    console.error(e);
+  }
+};
+
+window.doLogout = async function() {
+  await signOut(auth);
+  orders = []; draftItems = []; curOrderId = null;
+  show('screenHome');
+};
 
 // ── Helpers ──
 function show(id) {
@@ -338,34 +426,15 @@ function showSaving() {
   }, 800);
 }
 
-// ── Navigation ──
-function goHome()   { show('screenHome'); renderHome(); }
-function goNew()    {
+// ── Nav ──
+window.goHome  = function() { show('screenHome'); renderHome(); };
+window.goNew   = function() {
   draftItems = []; curGrade = 'casual-pg';
   document.getElementById('newClient').value = '';
   document.getElementById('newCode').value   = '';
   renderSizes(); renderPreview(); show('screenNew');
-}
-function goOrder(id) { curOrderId = id; renderOrderView(); show('screenOrder'); }
-
-// expose to inline onclick
-window.goHome  = goHome;
-window.goNew   = goNew;
-window.goOrder = goOrder;
-
-// ── Real-time listener ──
-const q = query(ordersCol, orderBy("createdAt", "desc"));
-onSnapshot(q, (snap) => {
-  orders = snap.docs.map(d => ({ firestoreId: d.id, ...d.data() }));
-  // hide loading on first load
-  document.getElementById('loadingOverlay').classList.add('hidden');
-  renderHome();
-  if (curOrderId) renderOrderView(); // refresh if open
-}, (err) => {
-  console.error(err);
-  toast('Erro ao conectar com o banco', 'var(--red)');
-  document.getElementById('loadingOverlay').classList.add('hidden');
-});
+};
+window.goOrder = function(id) { curOrderId = id; renderOrderView(); show('screenOrder'); };
 
 // ── HOME ──
 function renderHome() {
@@ -376,13 +445,13 @@ function renderHome() {
   }
   el.innerHTML = orders.map(o => {
     const s = calcStats(o);
-    const total = s.full + s.partial + s.zero + s.pend;
-    const pF = total > 0 ? Math.round(s.full    / total * 100) : 0;
-    const pP = total > 0 ? Math.round(s.partial / total * 100) : 0;
-    const pZ = total > 0 ? Math.round(s.zero    / total * 100) : 0;
+    const total = s.full+s.partial+s.zero+s.pend;
+    const pF = total>0?Math.round(s.full/total*100):0;
+    const pP = total>0?Math.round(s.partial/total*100):0;
+    const pZ = total>0?Math.round(s.zero/total*100):0;
     let badge = '';
-    if (s.zero > 0)         badge = `<div class="missing-badge">✗ ${s.zero} zerado${s.zero>1?'s':''}</div>`;
-    else if (s.partial > 0) badge = `<div class="partial-badge">◑ ${s.partial} parcial${s.partial>1?'is':''}</div>`;
+    if (s.zero>0)         badge = `<div class="missing-badge">✗ ${s.zero} zerado${s.zero>1?'s':''}</div>`;
+    else if (s.partial>0) badge = `<div class="partial-badge">◑ ${s.partial} parcial${s.partial>1?'is':''}</div>`;
     return `<div class="order-card" onclick="goOrder('${o.firestoreId}')">
       <div>
         <div class="order-client">${o.client}</div>
@@ -402,13 +471,12 @@ function renderHome() {
 }
 
 // ── FORM ──
-function setGrade(el) {
+window.setGrade = function(el) {
   document.querySelectorAll('.g-tab').forEach(t => t.classList.remove('active'));
   el.classList.add('active');
   curGrade = el.dataset.grade;
   renderSizes();
-}
-window.setGrade = setGrade;
+};
 
 function renderSizes() {
   document.getElementById('sizesGrid').innerHTML = GRADES[curGrade].map(s => `
@@ -418,14 +486,13 @@ function renderSizes() {
     </div>`).join('');
 }
 
-function fillFull() { document.querySelectorAll('.s-input').forEach(i => i.value = 1); }
-window.fillFull = fillFull;
+window.fillFull = function() { document.querySelectorAll('.s-input').forEach(i => i.value = 1); };
 
-function addItem() {
+window.addItem = function() {
   const code = document.getElementById('newCode').value.trim();
   if (!code) { toast('Informe o código da peça', 'var(--red)'); return; }
   const sizes = {};
-  document.querySelectorAll('.s-input').forEach(i => { const q = parseInt(i.value)||0; if (q > 0) sizes[i.dataset.size] = q; });
+  document.querySelectorAll('.s-input').forEach(i => { const q=parseInt(i.value)||0; if(q>0) sizes[i.dataset.size]=q; });
   if (!Object.keys(sizes).length) { toast('Informe ao menos um tamanho', 'var(--red)'); return; }
   const found = {};
   Object.keys(sizes).forEach(s => found[s] = null);
@@ -433,11 +500,9 @@ function addItem() {
   document.getElementById('newCode').value = '';
   document.querySelectorAll('.s-input').forEach(i => i.value = '');
   renderPreview();
-}
-window.addItem = addItem;
+};
 
-function removeDraft(id) { draftItems = draftItems.filter(i => i.id !== id); renderPreview(); }
-window.removeDraft = removeDraft;
+window.removeDraft = function(id) { draftItems = draftItems.filter(i => i.id !== id); renderPreview(); };
 
 function renderPreview() {
   const el = document.getElementById('itemsPreview');
@@ -453,27 +518,24 @@ function renderPreview() {
   }).join('');
 }
 
-async function saveOrder() {
+window.saveOrder = async function() {
   const client = document.getElementById('newClient').value.trim();
-  if (!client)          { toast('Informe o nome da cliente', 'var(--red)'); return; }
-  if (!draftItems.length) { toast('Adicione ao menos uma peça', 'var(--red)'); return; }
-  const order = {
-    client,
-    date: new Date().toLocaleDateString('pt-BR'),
-    createdAt: Date.now(),
-    items: draftItems.map(i => ({ ...i }))
-  };
+  if (!client)           { toast('Informe o nome da cliente', 'var(--red)'); return; }
+  if (!draftItems.length){ toast('Adicione ao menos uma peça', 'var(--red)'); return; }
   try {
     showSaving();
-    await addDoc(ordersCol, order);
+    await addDoc(ordersCol, {
+      client,
+      date: new Date().toLocaleDateString('pt-BR'),
+      createdAt: Date.now(),
+      items: draftItems.map(i => ({ ...i }))
+    });
     toast('Pedido salvo!');
-    setTimeout(() => goHome(), 600);
+    setTimeout(() => window.goHome(), 600);
   } catch(e) {
-    console.error(e);
     toast('Erro ao salvar: ' + e.message, 'var(--red)');
   }
-}
-window.saveOrder = saveOrder;
+};
 
 // ── ORDER VIEW ──
 function renderOrderView() {
@@ -482,10 +544,9 @@ function renderOrderView() {
   document.getElementById('viewClient').textContent = o.client;
   document.getElementById('viewDate').textContent   = o.date + ' · ' + totalPcs(o) + ' peças · ' + o.items.length + ' ref.';
 
-  const el = document.getElementById('orderItems');
-  el.innerHTML = o.items.map(item => {
+  document.getElementById('orderItems').innerHTML = o.items.map(item => {
     const allFull   = Object.entries(item.sizes).every(([s,q]) => item.found[s] === q);
-    const anyFilled = Object.entries(item.sizes).some(([s])  => item.found[s] !== null);
+    const anyFilled = Object.entries(item.sizes).some(([s])   => item.found[s] !== null);
     return `<div class="ped-item-card">
       <div class="ped-item-head">
         <div>
@@ -497,11 +558,11 @@ function renderOrderView() {
       <div class="size-rows">
         ${Object.entries(item.sizes).map(([s,q]) => {
           const found = item.found[s];
-          let cls = '', statusTxt = '', disp = found === null ? 0 : found;
-          if (found === null)    { cls = '';           statusTxt = 'Pendente'; }
-          else if (found >= q)   { cls = 'st-full';    statusTxt = 'Completo ✓'; }
-          else if (found > 0)    { cls = 'st-partial'; statusTxt = `Falta ${q-found} peça${q-found>1?'s':''}`; }
-          else                   { cls = 'st-zero';    statusTxt = 'Não encontrado ✗'; }
+          let cls='', statusTxt='', disp = found===null ? 0 : found;
+          if (found===null)  { cls='';           statusTxt='Pendente'; }
+          else if (found>=q) { cls='st-full';    statusTxt='Completo ✓'; }
+          else if (found>0)  { cls='st-partial'; statusTxt=`Falta ${q-found} peça${q-found>1?'s':''}`; }
+          else               { cls='st-zero';    statusTxt='Não encontrado ✗'; }
           return `<div class="size-row ${cls}">
             <div class="sr-info">
               <div class="sr-top"><span class="sr-size">Tam. ${s}</span><span class="sr-pedido">/ ${q} pedido</span></div>
@@ -521,36 +582,32 @@ function renderOrderView() {
   updateProgress(o);
 }
 
-async function changeQty(orderId, itemId, size, max, delta) {
+window.changeQty = async function(orderId, itemId, size, max, delta) {
   const o = orders.find(x => x.firestoreId === orderId);
   if (!o) return;
   const item = o.items.find(i => i.id === itemId);
   if (!item) return;
   const cur  = item.found[size] === null ? 0 : item.found[size];
-  let   next = Math.max(0, Math.min(max, cur + delta));
-  item.found[size] = next;
-  // optimistic UI
+  item.found[size] = Math.max(0, Math.min(max, cur + delta));
   renderOrderView();
-  // save to Firestore
   try {
     showSaving();
-    await setDoc(doc(db, "pedidos", orderId), o, { merge: false });
+    const { firestoreId, ...data } = o;
+    await setDoc(doc(db, "pedidos", orderId), data);
   } catch(e) {
-    console.error(e);
     toast('Erro ao salvar', 'var(--red)');
   }
-}
-window.changeQty = changeQty;
+};
 
 function calcStats(o) {
   let full=0, partial=0, zero=0, pend=0;
   o.items.forEach(item => {
     Object.entries(item.sizes).forEach(([s,q]) => {
       const f = item.found[s];
-      if (f === null)  pend++;
-      else if (f >= q) full++;
-      else if (f > 0)  partial++;
-      else             zero++;
+      if (f===null) pend++;
+      else if (f>=q) full++;
+      else if (f>0)  partial++;
+      else           zero++;
     });
   });
   return { full, partial, zero, pend };
@@ -559,10 +616,10 @@ function calcStats(o) {
 function totalPcs(o) { let t=0; o.items.forEach(i=>Object.values(i.sizes).forEach(q=>t+=q)); return t; }
 
 function updateProgress(o) {
-  const s = calcStats(o), total = s.full+s.partial+s.zero+s.pend;
-  const pF = total>0?Math.round(s.full/total*100):0;
-  const pP = total>0?Math.round(s.partial/total*100):0;
-  const pZ = total>0?Math.round(s.zero/total*100):0;
+  const s=calcStats(o), total=s.full+s.partial+s.zero+s.pend;
+  const pF=total>0?Math.round(s.full/total*100):0;
+  const pP=total>0?Math.round(s.partial/total*100):0;
+  const pZ=total>0?Math.round(s.zero/total*100):0;
   document.getElementById('progGreen').style.width  = pF+'%';
   document.getElementById('progOrange').style.width = pP+'%';
   document.getElementById('progRed').style.width    = pZ+'%';
@@ -574,39 +631,31 @@ function updateProgress(o) {
     `GUGĒ JEANS · ${o.client} · ${o.date} · Completos: ${s.full}  Parciais: ${s.partial}  Zerados: ${s.zero}`;
 }
 
-async function deleteOrder() {
+window.deleteOrder = async function() {
   const o = orders.find(x => x.firestoreId === curOrderId);
   if (!confirm(`Excluir pedido de ${o?o.client:''}?`)) return;
   try {
     await deleteDoc(doc(db, "pedidos", curOrderId));
-    goHome();
-  } catch(e) {
-    toast('Erro ao excluir', 'var(--red)');
-  }
-}
-window.deleteOrder = deleteOrder;
+    window.goHome();
+  } catch(e) { toast('Erro ao excluir', 'var(--red)'); }
+};
 
-function copyOrder() {
+window.copyOrder = function() {
   const o = orders.find(x => x.firestoreId === curOrderId);
   if (!o) return;
   let t = `GUGĒ JEANS — SEPARAÇÃO\n${'─'.repeat(36)}\nCliente: ${o.client}\nData: ${o.date}\n${'─'.repeat(36)}\n`;
-  o.items.forEach((item, i) => {
+  o.items.forEach((item,i) => {
     t += `\n${String(i+1).padStart(2,'0')}. ${item.code} [${GL[item.grade]}]\n`;
     Object.entries(item.sizes).forEach(([s,q]) => {
       const f = item.found[s];
-      let info;
-      if (f === null)  info = 'pendente';
-      else if (f >= q) info = `${f}/${q} ✓`;
-      else if (f > 0)  info = `${f}/${q} — falta ${q-f}`;
-      else             info = `0/${q} ✗ não encontrado`;
+      const info = f===null?'pendente':f>=q?`${f}/${q} ✓`:f>0?`${f}/${q} — falta ${q-f}`:`0/${q} ✗`;
       t += `    Tam.${s.padEnd(4)} — ${info}\n`;
     });
   });
-  const s = calcStats(o);
+  const s=calcStats(o);
   t += `\n${'─'.repeat(36)}\nCompletos: ${s.full}  Parciais: ${s.partial}  Zerados: ${s.zero}  Pendentes: ${s.pend}\n`;
   navigator.clipboard.writeText(t).then(() => toast('Copiado!'));
-}
-window.copyOrder = copyOrder;
+};
 
 // ── Init ──
 renderSizes();
