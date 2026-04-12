@@ -321,12 +321,16 @@ const GL = {
   'j3646':'Jeans 36–46','j3844':'Jeans 38–44','custom':'Personalizado'
 };
 
-let orders = JSON.parse(localStorage.getItem('guge_orders')||'[]');
+let orders = [];
 let draftItems = [];
 let curGrade = 'casual-pg';
 let curOrderId = null;
 
-function save() { localStorage.setItem('guge_orders', JSON.stringify(orders)); }
+async function save() {
+  for (const order of orders) {
+    await addDoc(collection(db, "orders"), order);
+  }
+}
 
 // ── NAV ──
 function show(id) { document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active')); document.getElementById(id).classList.add('active'); window.scrollTo(0,0); }
