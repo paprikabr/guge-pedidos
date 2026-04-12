@@ -27,7 +27,6 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { background: var(--cream); color: var(--text); font-family: 'Barlow', sans-serif; min-height: 100vh; }
 
-/* ── LOADING ── */
 .loading-overlay { position: fixed; inset: 0; background: var(--navy); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 999; transition: opacity .4s; }
 .loading-overlay.hidden { opacity: 0; pointer-events: none; }
 .loading-logo { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 2.8rem; color: var(--cream); letter-spacing: .12em; }
@@ -38,21 +37,22 @@ body { background: var(--cream); color: var(--text); font-family: 'Barlow', sans
 .loading-dots span:nth-child(3) { animation-delay: .4s; }
 @keyframes pulse { 0%,80%,100%{opacity:.3} 40%{opacity:1} }
 
-/* ── LOGIN ── */
+/* LOGIN */
 .login-screen { position: fixed; inset: 0; background: var(--navy); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 500; padding: 32px 24px; }
 .login-screen.hidden { display: none; }
 .login-logo { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 3rem; color: var(--cream); letter-spacing: .12em; line-height: 1; }
 .login-sub   { font-size: .55rem; letter-spacing: .45em; color: rgba(237,234,226,.4); text-transform: uppercase; margin-top: 4px; margin-bottom: 40px; }
 .login-box   { width: 100%; max-width: 320px; }
 .login-label { font-size: .62rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; color: rgba(237,234,226,.55); margin-bottom: 6px; display: block; }
-.login-input { width: 100%; background: rgba(255,255,255,.08); border: 1px solid rgba(237,234,226,.2); color: var(--cream); font-family: 'Barlow', sans-serif; font-size: 1rem; padding: 12px 14px; outline: none; transition: border-color .2s; letter-spacing: .04em; }
+.login-input { width: 100%; background: rgba(255,255,255,.08); border: 1px solid rgba(237,234,226,.2); color: var(--cream); font-family: 'Barlow', sans-serif; font-size: 1rem; padding: 12px 14px; outline: none; transition: border-color .2s; }
 .login-input:focus { border-color: rgba(237,234,226,.6); }
 .login-input::placeholder { color: rgba(237,234,226,.25); }
 .login-btn { width: 100%; background: var(--cream); border: none; color: var(--navy); cursor: pointer; font-family: 'Barlow', sans-serif; font-size: .82rem; font-weight: 800; letter-spacing: .16em; padding: 14px; text-transform: uppercase; margin-top: 12px; transition: opacity .2s; }
 .login-btn:hover { opacity: .88; }
-.login-error { color: #ff8a80; font-size: .75rem; margin-top: 10px; text-align: center; min-height: 20px; letter-spacing: .03em; }
+.login-btn:disabled { opacity: .5; cursor: not-allowed; }
+.login-error { color: #ff8a80; font-size: .75rem; margin-top: 10px; text-align: center; min-height: 20px; }
 
-/* ── APP ── */
+/* APP */
 .app-header { background: var(--navy); padding: 13px 16px 11px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 200; }
 .logo { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 1.5rem; color: var(--cream); letter-spacing: .1em; line-height: 1; }
 .logo span { display: block; font-size: .5rem; letter-spacing: .4em; color: rgba(237,234,226,.45); margin-top: 2px; }
@@ -64,7 +64,6 @@ body { background: var(--cream); color: var(--text); font-family: 'Barlow', sans
 .screen { display: none; }
 .screen.active { display: block; }
 
-/* ── HOME ── */
 .home-section { padding: 14px 16px 0; }
 .section-label { font-size: .6rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
 .order-card { background: var(--white); border: 1px solid var(--border); border-left: 3px solid var(--navy); margin-bottom: 8px; cursor: pointer; transition: border-color .15s; display: flex; align-items: center; justify-content: space-between; padding: 11px 12px; }
@@ -81,7 +80,6 @@ body { background: var(--cream); color: var(--text); font-family: 'Barlow', sans
 .partial-badge { background: var(--orange); color: #fff; font-size: .58rem; font-weight: 700; padding: 2px 6px; text-transform: uppercase; margin-top: 4px; display: inline-block; }
 .empty-home { color: var(--muted); font-size: .82rem; padding: 32px 16px; text-align: center; line-height: 1.8; }
 
-/* ── FORM ── */
 .form-header { background: var(--cream-dark); padding: 11px 16px; border-bottom: 1px solid var(--border); }
 .form-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: .9rem; letter-spacing: .15em; text-transform: uppercase; color: var(--navy); }
 .f-section { padding: 12px 16px 0; }
@@ -111,7 +109,6 @@ body { background: var(--cream); color: var(--text); font-family: 'Barlow', sans
 .btn-save-order { background: var(--navy); border: none; color: var(--cream); cursor: pointer; font-family: 'Barlow', sans-serif; font-size: .8rem; font-weight: 700; letter-spacing: .14em; padding: 14px; text-transform: uppercase; width: calc(100% - 32px); margin: 14px 16px 90px; display: block; transition: background .2s; }
 .btn-save-order:hover { background: var(--navy-dark); }
 
-/* ── ORDER VIEW ── */
 .ped-header { background: var(--navy); padding: 11px 16px; }
 .ped-client { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 1.05rem; letter-spacing: .1em; text-transform: uppercase; color: var(--cream); }
 .ped-date { font-size: .62rem; color: rgba(237,234,226,.5); margin-top: 2px; }
@@ -128,7 +125,7 @@ body { background: var(--cream); color: var(--text); font-family: 'Barlow', sans
 .ped-item-card { background: var(--white); border: 1px solid var(--border); border-left: 3px solid var(--navy); margin: 8px 16px 0; overflow: hidden; }
 .ped-item-head { background: var(--cream); border-bottom: 1px solid var(--cream-dark); padding: 9px 11px; display: flex; align-items: center; justify-content: space-between; }
 .ped-item-code { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: .95rem; letter-spacing: .1em; text-transform: uppercase; color: var(--navy); }
-.ped-item-grade { font-size: .6rem; color: var(--muted); text-transform: uppercase; letter-spacing: .1em; }
+.ped-item-grade { font-size: .6rem; color: var(--muted); text-transform: uppercase; }
 .item-ok-badge { font-size: .62rem; font-weight: 700; color: var(--green); }
 .size-rows { display: flex; flex-wrap: wrap; }
 .size-row { width: 50%; display: flex; align-items: center; gap: 8px; padding: 8px 10px; border-bottom: 1px solid var(--cream-dark); transition: background .15s; }
@@ -146,7 +143,7 @@ body { background: var(--cream); color: var(--text); font-family: 'Barlow', sans
 .st-partial .sr-status { color: var(--orange); }
 .st-zero    .sr-status { color: var(--red); }
 .qty-group { display: flex; align-items: center; flex-shrink: 0; }
-.qty-btn { width: 28px; height: 28px; border: 1px solid var(--border); background: var(--cream); color: var(--text); font-size: 1.1rem; cursor: pointer; font-weight: 700; display: flex; align-items: center; justify-content: center; transition: background .15s; user-select: none; -webkit-user-select: none; }
+.qty-btn { width: 28px; height: 28px; border: 1px solid var(--border); background: var(--cream); color: var(--text); font-size: 1.1rem; cursor: pointer; font-weight: 700; display: flex; align-items: center; justify-content: center; user-select: none; -webkit-user-select: none; }
 .qty-btn:active { background: var(--cream-dark); }
 .qty-val { width: 34px; height: 28px; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: var(--white); text-align: center; font-family: 'Barlow', sans-serif; font-size: .9rem; font-weight: 700; color: var(--navy); line-height: 28px; }
 .st-full    .qty-btn { border-color: var(--green);  background: var(--green-bg); }
@@ -185,34 +182,32 @@ body { background: var(--cream); color: var(--text); font-family: 'Barlow', sans
 </head>
 <body>
 
-<!-- LOADING -->
 <div class="loading-overlay" id="loadingOverlay">
   <div class="loading-logo">GUGĒ</div>
   <div class="loading-sub">J E A N S</div>
   <div class="loading-dots"><span></span><span></span><span></span></div>
 </div>
 
-<!-- LOGIN -->
 <div class="login-screen hidden" id="loginScreen">
   <div class="login-logo">GUGĒ</div>
   <div class="login-sub">J E A N S</div>
   <div class="login-box">
     <label class="login-label">Senha de acesso</label>
-    <input class="login-input" type="password" id="loginInput" placeholder="Digite a senha..." onkeydown="if(event.key==='Enter')doLogin()" />
-    <button class="login-btn" onclick="doLogin()">Entrar</button>
+    <input class="login-input" type="password" id="loginInput" placeholder="Digite a senha..."
+           onkeydown="if(event.key==='Enter')doLogin()" />
+    <button class="login-btn" id="loginBtn" onclick="doLogin()">Entrar</button>
     <div class="login-error" id="loginError"></div>
   </div>
 </div>
 
 <div class="save-indicator" id="saveIndicator">Salvando...</div>
 
-<!-- HOME -->
 <div id="screenHome" class="screen active">
   <div class="app-header">
     <div><div class="logo">GUGĒ<span>J E A N S</span></div></div>
     <div class="header-actions">
       <button class="header-action" onclick="goNew()">+ Novo Pedido</button>
-      <button class="header-action logout" onclick="doLogout()" title="Sair">Sair</button>
+      <button class="header-action logout" onclick="doLogout()">Sair</button>
     </div>
   </div>
   <div class="home-section" style="padding-top:16px">
@@ -221,7 +216,6 @@ body { background: var(--cream); color: var(--text); font-family: 'Barlow', sans
   </div>
 </div>
 
-<!-- NEW ORDER -->
 <div id="screenNew" class="screen">
   <div class="app-header">
     <div><div class="logo">GUGĒ<span>J E A N S</span></div></div>
@@ -263,7 +257,6 @@ body { background: var(--cream); color: var(--text); font-family: 'Barlow', sans
   <button class="btn-save-order" onclick="saveOrder()">Salvar Pedido</button>
 </div>
 
-<!-- ORDER VIEW -->
 <div id="screenOrder" class="screen">
   <div class="app-header">
     <div><div class="logo">GUGĒ<span>J E A N S</span></div></div>
@@ -299,14 +292,14 @@ body { background: var(--cream); color: var(--text); font-family: 'Barlow', sans
 <div class="toast" id="toast"></div>
 
 <script type="module">
-import { initializeApp }                      from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { initializeApp }                          from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword,
-         signOut, onAuthStateChanged }        from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+         signOut, onAuthStateChanged }            from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 import { getFirestore, collection, doc,
          addDoc, setDoc, deleteDoc,
-         onSnapshot, query, orderBy }         from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+         onSnapshot, query, orderBy }             from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-// ── Config ──
+// ── Firebase ──
 const firebaseConfig = {
   apiKey:            "AIzaSyBTZreKXo4kClI6epaLpZXzC6lGtFfxmzw",
   authDomain:        "guge-pedidos.firebaseapp.com",
@@ -316,9 +309,9 @@ const firebaseConfig = {
   appId:             "1:902434016307:web:a551b681b5fe121daaa746"
 };
 
-// Conta interna usada para autenticar
-const APP_EMAIL    = "app@guge-pedidos.internal";
-const APP_PASSWORD = "Pamil,12";
+// O email é fixo (não é segredo). A SENHA não fica aqui — o usuário digita.
+// O Firebase verifica se email+senha batem. Se não bater, nega acesso.
+const APP_EMAIL = "app@guge-pedidos.internal";
 
 const app  = initializeApp(firebaseConfig);
 const auth = getAuth(app);
@@ -344,27 +337,27 @@ let draftItems = [];
 let curGrade   = 'casual-pg';
 let curOrderId = null;
 let saveTimer  = null;
-let unsubscribe = null;
+let unsubOrders = null;
 
-// ── Auth flow ──
+// ── Auth state ──
 onAuthStateChanged(auth, (user) => {
+  document.getElementById('loadingOverlay').classList.add('hidden');
   if (user) {
-    // Logged in — start listening
     document.getElementById('loginScreen').classList.add('hidden');
-    document.getElementById('loadingOverlay').classList.add('hidden');
     startListening();
   } else {
-    // Not logged in — show login
-    if (unsubscribe) { unsubscribe(); unsubscribe = null; }
-    document.getElementById('loadingOverlay').classList.add('hidden');
+    if (unsubOrders) { unsubOrders(); unsubOrders = null; }
+    orders = [];
     document.getElementById('loginScreen').classList.remove('hidden');
+    document.getElementById('loginInput').value = '';
+    document.getElementById('loginError').textContent = '';
   }
 });
 
 function startListening() {
-  if (unsubscribe) unsubscribe();
-  const q = query(ordersCol, orderBy("createdAt", "desc"));
-  unsubscribe = onSnapshot(q, (snap) => {
+  if (unsubOrders) unsubOrders();
+  const q = query(ordersCol, orderBy("createdAt","desc"));
+  unsubOrders = onSnapshot(q, (snap) => {
     orders = snap.docs.map(d => ({ firestoreId: d.id, ...d.data() }));
     renderHome();
     if (curOrderId) renderOrderView();
@@ -374,29 +367,31 @@ function startListening() {
   });
 }
 
-// ── Login / Logout ──
+// ── Login ──
+// A senha que o usuário digita vai direto pro Firebase — nunca fica no código.
 window.doLogin = async function() {
-  const senha = document.getElementById('loginInput').value;
+  const senha = document.getElementById('loginInput').value.trim();
   const errEl = document.getElementById('loginError');
+  const btn   = document.getElementById('loginBtn');
   errEl.textContent = '';
   if (!senha) { errEl.textContent = 'Digite a senha.'; return; }
-  // Map user password → firebase credentials
-  if (senha !== APP_PASSWORD) {
+  btn.disabled = true;
+  btn.textContent = 'Entrando...';
+  try {
+    await signInWithEmailAndPassword(auth, APP_EMAIL, senha);
+    // onAuthStateChanged cuida do resto
+  } catch(e) {
     errEl.textContent = 'Senha incorreta.';
     document.getElementById('loginInput').value = '';
-    return;
-  }
-  try {
-    await signInWithEmailAndPassword(auth, APP_EMAIL, APP_PASSWORD);
-  } catch(e) {
-    errEl.textContent = 'Erro ao entrar. Tente novamente.';
-    console.error(e);
+    document.getElementById('loginInput').focus();
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Entrar';
   }
 };
 
 window.doLogout = async function() {
   await signOut(auth);
-  orders = []; draftItems = []; curOrderId = null;
   show('screenHome');
 };
 
@@ -404,7 +399,7 @@ window.doLogout = async function() {
 function show(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
-  window.scrollTo(0, 0);
+  window.scrollTo(0,0);
 }
 
 function toast(msg, color) {
@@ -427,31 +422,30 @@ function showSaving() {
 }
 
 // ── Nav ──
-window.goHome  = function() { show('screenHome'); renderHome(); };
-window.goNew   = function() {
-  draftItems = []; curGrade = 'casual-pg';
-  document.getElementById('newClient').value = '';
-  document.getElementById('newCode').value   = '';
+window.goHome  = () => { show('screenHome'); renderHome(); };
+window.goNew   = () => {
+  draftItems=[]; curGrade='casual-pg';
+  document.getElementById('newClient').value='';
+  document.getElementById('newCode').value='';
   renderSizes(); renderPreview(); show('screenNew');
 };
-window.goOrder = function(id) { curOrderId = id; renderOrderView(); show('screenOrder'); };
+window.goOrder = (id) => { curOrderId=id; renderOrderView(); show('screenOrder'); };
 
-// ── HOME ──
+// ── Home ──
 function renderHome() {
   const el = document.getElementById('orderList');
   if (!orders.length) {
-    el.innerHTML = '<p class="empty-home">Nenhum pedido ainda.<br>Toque em <strong>+ Novo Pedido</strong> para começar.</p>';
+    el.innerHTML='<p class="empty-home">Nenhum pedido ainda.<br>Toque em <strong>+ Novo Pedido</strong> para começar.</p>';
     return;
   }
   el.innerHTML = orders.map(o => {
-    const s = calcStats(o);
-    const total = s.full+s.partial+s.zero+s.pend;
-    const pF = total>0?Math.round(s.full/total*100):0;
-    const pP = total>0?Math.round(s.partial/total*100):0;
-    const pZ = total>0?Math.round(s.zero/total*100):0;
-    let badge = '';
-    if (s.zero>0)         badge = `<div class="missing-badge">✗ ${s.zero} zerado${s.zero>1?'s':''}</div>`;
-    else if (s.partial>0) badge = `<div class="partial-badge">◑ ${s.partial} parcial${s.partial>1?'is':''}</div>`;
+    const s=calcStats(o), total=s.full+s.partial+s.zero+s.pend;
+    const pF=total>0?Math.round(s.full/total*100):0;
+    const pP=total>0?Math.round(s.partial/total*100):0;
+    const pZ=total>0?Math.round(s.zero/total*100):0;
+    let badge='';
+    if (s.zero>0)         badge=`<div class="missing-badge">✗ ${s.zero} zerado${s.zero>1?'s':''}</div>`;
+    else if (s.partial>0) badge=`<div class="partial-badge">◑ ${s.partial} parcial${s.partial>1?'is':''}</div>`;
     return `<div class="order-card" onclick="goOrder('${o.firestoreId}')">
       <div>
         <div class="order-client">${o.client}</div>
@@ -470,47 +464,47 @@ function renderHome() {
   }).join('');
 }
 
-// ── FORM ──
-window.setGrade = function(el) {
-  document.querySelectorAll('.g-tab').forEach(t => t.classList.remove('active'));
+// ── Form ──
+window.setGrade = (el) => {
+  document.querySelectorAll('.g-tab').forEach(t=>t.classList.remove('active'));
   el.classList.add('active');
-  curGrade = el.dataset.grade;
+  curGrade=el.dataset.grade;
   renderSizes();
 };
 
 function renderSizes() {
-  document.getElementById('sizesGrid').innerHTML = GRADES[curGrade].map(s => `
+  document.getElementById('sizesGrid').innerHTML = GRADES[curGrade].map(s=>`
     <div class="size-block">
       <span class="s-label">${s}</span>
       <input class="s-input" type="number" min="0" max="99" placeholder="0" data-size="${s}" />
     </div>`).join('');
 }
 
-window.fillFull = function() { document.querySelectorAll('.s-input').forEach(i => i.value = 1); };
+window.fillFull = () => document.querySelectorAll('.s-input').forEach(i=>i.value=1);
 
-window.addItem = function() {
-  const code = document.getElementById('newCode').value.trim();
-  if (!code) { toast('Informe o código da peça', 'var(--red)'); return; }
-  const sizes = {};
-  document.querySelectorAll('.s-input').forEach(i => { const q=parseInt(i.value)||0; if(q>0) sizes[i.dataset.size]=q; });
-  if (!Object.keys(sizes).length) { toast('Informe ao menos um tamanho', 'var(--red)'); return; }
-  const found = {};
-  Object.keys(sizes).forEach(s => found[s] = null);
-  draftItems.push({ code, grade: curGrade, sizes, found, id: Date.now() });
-  document.getElementById('newCode').value = '';
-  document.querySelectorAll('.s-input').forEach(i => i.value = '');
+window.addItem = () => {
+  const code=document.getElementById('newCode').value.trim();
+  if (!code) { toast('Informe o código da peça','var(--red)'); return; }
+  const sizes={};
+  document.querySelectorAll('.s-input').forEach(i=>{ const q=parseInt(i.value)||0; if(q>0)sizes[i.dataset.size]=q; });
+  if (!Object.keys(sizes).length) { toast('Informe ao menos um tamanho','var(--red)'); return; }
+  const found={};
+  Object.keys(sizes).forEach(s=>found[s]=null);
+  draftItems.push({code,grade:curGrade,sizes,found,id:Date.now()});
+  document.getElementById('newCode').value='';
+  document.querySelectorAll('.s-input').forEach(i=>i.value='');
   renderPreview();
 };
 
-window.removeDraft = function(id) { draftItems = draftItems.filter(i => i.id !== id); renderPreview(); };
+window.removeDraft = (id) => { draftItems=draftItems.filter(i=>i.id!==id); renderPreview(); };
 
 function renderPreview() {
-  const el = document.getElementById('itemsPreview');
-  let total = 0; draftItems.forEach(i => Object.values(i.sizes).forEach(q => total += q));
-  document.getElementById('newCount').textContent = total + ' peças';
-  if (!draftItems.length) { el.innerHTML = ''; return; }
-  el.innerHTML = draftItems.map(item => {
-    const st = Object.entries(item.sizes).map(([s,q]) => `${s}:${q}`).join(' ');
+  const el=document.getElementById('itemsPreview');
+  let total=0; draftItems.forEach(i=>Object.values(i.sizes).forEach(q=>total+=q));
+  document.getElementById('newCount').textContent=total+' peças';
+  if (!draftItems.length) { el.innerHTML=''; return; }
+  el.innerHTML=draftItems.map(item=>{
+    const st=Object.entries(item.sizes).map(([s,q])=>`${s}:${q}`).join(' ');
     return `<div class="preview-item">
       <div><div class="pi-code">${item.code}</div><div class="pi-detail">${GL[item.grade]} · ${st}</div></div>
       <button class="pi-remove" onclick="removeDraft(${item.id})">✕</button>
@@ -518,51 +512,43 @@ function renderPreview() {
   }).join('');
 }
 
-window.saveOrder = async function() {
-  const client = document.getElementById('newClient').value.trim();
-  if (!client)           { toast('Informe o nome da cliente', 'var(--red)'); return; }
-  if (!draftItems.length){ toast('Adicione ao menos uma peça', 'var(--red)'); return; }
+window.saveOrder = async () => {
+  const client=document.getElementById('newClient').value.trim();
+  if (!client)            { toast('Informe o nome da cliente','var(--red)'); return; }
+  if (!draftItems.length) { toast('Adicione ao menos uma peça','var(--red)'); return; }
   try {
     showSaving();
-    await addDoc(ordersCol, {
-      client,
-      date: new Date().toLocaleDateString('pt-BR'),
-      createdAt: Date.now(),
-      items: draftItems.map(i => ({ ...i }))
+    await addDoc(ordersCol,{
+      client, date:new Date().toLocaleDateString('pt-BR'),
+      createdAt:Date.now(), items:draftItems.map(i=>({...i}))
     });
     toast('Pedido salvo!');
-    setTimeout(() => window.goHome(), 600);
-  } catch(e) {
-    toast('Erro ao salvar: ' + e.message, 'var(--red)');
-  }
+    setTimeout(()=>window.goHome(),600);
+  } catch(e) { toast('Erro ao salvar: '+e.message,'var(--red)'); }
 };
 
-// ── ORDER VIEW ──
+// ── Order view ──
 function renderOrderView() {
-  const o = orders.find(x => x.firestoreId === curOrderId);
+  const o=orders.find(x=>x.firestoreId===curOrderId);
   if (!o) return;
-  document.getElementById('viewClient').textContent = o.client;
-  document.getElementById('viewDate').textContent   = o.date + ' · ' + totalPcs(o) + ' peças · ' + o.items.length + ' ref.';
-
-  document.getElementById('orderItems').innerHTML = o.items.map(item => {
-    const allFull   = Object.entries(item.sizes).every(([s,q]) => item.found[s] === q);
-    const anyFilled = Object.entries(item.sizes).some(([s])   => item.found[s] !== null);
+  document.getElementById('viewClient').textContent=o.client;
+  document.getElementById('viewDate').textContent=o.date+' · '+totalPcs(o)+' peças · '+o.items.length+' ref.';
+  document.getElementById('orderItems').innerHTML=o.items.map(item=>{
+    const allFull  =Object.entries(item.sizes).every(([s,q])=>item.found[s]===q);
+    const anyFilled=Object.entries(item.sizes).some(([s])=>item.found[s]!==null);
     return `<div class="ped-item-card">
       <div class="ped-item-head">
-        <div>
-          <div class="ped-item-code">${item.code}</div>
-          <div class="ped-item-grade">${GL[item.grade]||''}</div>
-        </div>
-        ${allFull && anyFilled ? '<span class="item-ok-badge">✓ Completo</span>' : ''}
+        <div><div class="ped-item-code">${item.code}</div><div class="ped-item-grade">${GL[item.grade]||''}</div></div>
+        ${allFull&&anyFilled?'<span class="item-ok-badge">✓ Completo</span>':''}
       </div>
       <div class="size-rows">
-        ${Object.entries(item.sizes).map(([s,q]) => {
-          const found = item.found[s];
-          let cls='', statusTxt='', disp = found===null ? 0 : found;
-          if (found===null)  { cls='';           statusTxt='Pendente'; }
-          else if (found>=q) { cls='st-full';    statusTxt='Completo ✓'; }
-          else if (found>0)  { cls='st-partial'; statusTxt=`Falta ${q-found} peça${q-found>1?'s':''}`; }
-          else               { cls='st-zero';    statusTxt='Não encontrado ✗'; }
+        ${Object.entries(item.sizes).map(([s,q])=>{
+          const found=item.found[s];
+          let cls='',statusTxt='',disp=found===null?0:found;
+          if(found===null)  {cls='';          statusTxt='Pendente';}
+          else if(found>=q) {cls='st-full';   statusTxt='Completo ✓';}
+          else if(found>0)  {cls='st-partial';statusTxt=`Falta ${q-found} peça${q-found>1?'s':''}`;}
+          else              {cls='st-zero';   statusTxt='Não encontrado ✗';}
           return `<div class="size-row ${cls}">
             <div class="sr-info">
               <div class="sr-top"><span class="sr-size">Tam. ${s}</span><span class="sr-pedido">/ ${q} pedido</span></div>
@@ -578,86 +564,72 @@ function renderOrderView() {
       </div>
     </div>`;
   }).join('');
-
   updateProgress(o);
 }
 
-window.changeQty = async function(orderId, itemId, size, max, delta) {
-  const o = orders.find(x => x.firestoreId === orderId);
-  if (!o) return;
-  const item = o.items.find(i => i.id === itemId);
-  if (!item) return;
-  const cur  = item.found[size] === null ? 0 : item.found[size];
-  item.found[size] = Math.max(0, Math.min(max, cur + delta));
+window.changeQty = async (orderId,itemId,size,max,delta) => {
+  const o=orders.find(x=>x.firestoreId===orderId); if(!o)return;
+  const item=o.items.find(i=>i.id===itemId); if(!item)return;
+  const cur=item.found[size]===null?0:item.found[size];
+  item.found[size]=Math.max(0,Math.min(max,cur+delta));
   renderOrderView();
   try {
     showSaving();
-    const { firestoreId, ...data } = o;
-    await setDoc(doc(db, "pedidos", orderId), data);
-  } catch(e) {
-    toast('Erro ao salvar', 'var(--red)');
-  }
+    const {firestoreId,...data}=o;
+    await setDoc(doc(db,'pedidos',orderId),data);
+  } catch(e) { toast('Erro ao salvar','var(--red)'); }
 };
 
 function calcStats(o) {
-  let full=0, partial=0, zero=0, pend=0;
-  o.items.forEach(item => {
-    Object.entries(item.sizes).forEach(([s,q]) => {
-      const f = item.found[s];
-      if (f===null) pend++;
-      else if (f>=q) full++;
-      else if (f>0)  partial++;
-      else           zero++;
-    });
-  });
-  return { full, partial, zero, pend };
+  let full=0,partial=0,zero=0,pend=0;
+  o.items.forEach(item=>Object.entries(item.sizes).forEach(([s,q])=>{
+    const f=item.found[s];
+    if(f===null)pend++; else if(f>=q)full++; else if(f>0)partial++; else zero++;
+  }));
+  return {full,partial,zero,pend};
 }
 
-function totalPcs(o) { let t=0; o.items.forEach(i=>Object.values(i.sizes).forEach(q=>t+=q)); return t; }
+function totalPcs(o){let t=0;o.items.forEach(i=>Object.values(i.sizes).forEach(q=>t+=q));return t;}
 
-function updateProgress(o) {
-  const s=calcStats(o), total=s.full+s.partial+s.zero+s.pend;
+function updateProgress(o){
+  const s=calcStats(o),total=s.full+s.partial+s.zero+s.pend;
   const pF=total>0?Math.round(s.full/total*100):0;
   const pP=total>0?Math.round(s.partial/total*100):0;
   const pZ=total>0?Math.round(s.zero/total*100):0;
-  document.getElementById('progGreen').style.width  = pF+'%';
-  document.getElementById('progOrange').style.width = pP+'%';
-  document.getElementById('progRed').style.width    = pZ+'%';
-  document.getElementById('statOk').textContent   = `✓ ${s.full} completos`;
-  document.getElementById('statPart').textContent = `◑ ${s.partial} parciais`;
-  document.getElementById('statZero').textContent = `✗ ${s.zero} zerados`;
-  document.getElementById('statPend').textContent = `◦ ${s.pend} pendentes`;
-  document.getElementById('printStats').textContent =
+  document.getElementById('progGreen').style.width =pF+'%';
+  document.getElementById('progOrange').style.width=pP+'%';
+  document.getElementById('progRed').style.width   =pZ+'%';
+  document.getElementById('statOk').textContent  =`✓ ${s.full} completos`;
+  document.getElementById('statPart').textContent=`◑ ${s.partial} parciais`;
+  document.getElementById('statZero').textContent=`✗ ${s.zero} zerados`;
+  document.getElementById('statPend').textContent=`◦ ${s.pend} pendentes`;
+  document.getElementById('printStats').textContent=
     `GUGĒ JEANS · ${o.client} · ${o.date} · Completos: ${s.full}  Parciais: ${s.partial}  Zerados: ${s.zero}`;
 }
 
-window.deleteOrder = async function() {
-  const o = orders.find(x => x.firestoreId === curOrderId);
-  if (!confirm(`Excluir pedido de ${o?o.client:''}?`)) return;
-  try {
-    await deleteDoc(doc(db, "pedidos", curOrderId));
-    window.goHome();
-  } catch(e) { toast('Erro ao excluir', 'var(--red)'); }
+window.deleteOrder = async () => {
+  const o=orders.find(x=>x.firestoreId===curOrderId);
+  if(!confirm(`Excluir pedido de ${o?o.client:''}?`))return;
+  try { await deleteDoc(doc(db,'pedidos',curOrderId)); window.goHome(); }
+  catch(e){ toast('Erro ao excluir','var(--red)'); }
 };
 
-window.copyOrder = function() {
-  const o = orders.find(x => x.firestoreId === curOrderId);
-  if (!o) return;
-  let t = `GUGĒ JEANS — SEPARAÇÃO\n${'─'.repeat(36)}\nCliente: ${o.client}\nData: ${o.date}\n${'─'.repeat(36)}\n`;
-  o.items.forEach((item,i) => {
-    t += `\n${String(i+1).padStart(2,'0')}. ${item.code} [${GL[item.grade]}]\n`;
-    Object.entries(item.sizes).forEach(([s,q]) => {
-      const f = item.found[s];
-      const info = f===null?'pendente':f>=q?`${f}/${q} ✓`:f>0?`${f}/${q} — falta ${q-f}`:`0/${q} ✗`;
-      t += `    Tam.${s.padEnd(4)} — ${info}\n`;
+window.copyOrder = () => {
+  const o=orders.find(x=>x.firestoreId===curOrderId); if(!o)return;
+  let t=`GUGĒ JEANS — SEPARAÇÃO\n${'─'.repeat(36)}\nCliente: ${o.client}\nData: ${o.date}\n${'─'.repeat(36)}\n`;
+  o.items.forEach((item,i)=>{
+    t+=`\n${String(i+1).padStart(2,'0')}. ${item.code} [${GL[item.grade]}]\n`;
+    Object.entries(item.sizes).forEach(([s,q])=>{
+      const f=item.found[s];
+      const info=f===null?'pendente':f>=q?`${f}/${q} ✓`:f>0?`${f}/${q} — falta ${q-f}`:`0/${q} ✗`;
+      t+=`    Tam.${s.padEnd(4)} — ${info}\n`;
     });
   });
   const s=calcStats(o);
-  t += `\n${'─'.repeat(36)}\nCompletos: ${s.full}  Parciais: ${s.partial}  Zerados: ${s.zero}  Pendentes: ${s.pend}\n`;
-  navigator.clipboard.writeText(t).then(() => toast('Copiado!'));
+  t+=`\n${'─'.repeat(36)}\nCompletos: ${s.full}  Parciais: ${s.partial}  Zerados: ${s.zero}  Pendentes: ${s.pend}\n`;
+  navigator.clipboard.writeText(t).then(()=>toast('Copiado!'));
 };
 
-// ── Init ──
 renderSizes();
 </script>
 </body>
