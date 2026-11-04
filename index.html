@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Gugê Jeans — Pedidos</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@700;800&display=swap');
@@ -56,10 +56,11 @@ body { background: var(--cream); color: var(--text); font-family: 'Barlow', sans
 .app-header { background: var(--navy); padding: 13px 16px 11px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 200; }
 .logo { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 1.5rem; color: var(--cream); letter-spacing: .1em; line-height: 1; }
 .logo span { display: block; font-size: .5rem; letter-spacing: .4em; color: rgba(237,234,226,.45); margin-top: 2px; }
-.header-actions { display: flex; gap: 6px; }
-.header-action { background: transparent; border: 1px solid rgba(237,234,226,.3); color: rgba(237,234,226,.8); cursor: pointer; font-family: 'Barlow', sans-serif; font-size: .68rem; font-weight: 700; letter-spacing: .1em; padding: 7px 11px; text-transform: uppercase; transition: all .2s; }
+.header-actions { display: flex; gap: 5px; }
+.header-action { background: transparent; border: 1px solid rgba(237,234,226,.3); color: rgba(237,234,226,.8); cursor: pointer; font-family: 'Barlow', sans-serif; font-size: .66rem; font-weight: 700; letter-spacing: .08em; padding: 7px 9px; text-transform: uppercase; transition: all .2s; }
 .header-action:hover { border-color: var(--cream); color: var(--cream); }
 .header-action.logout { border-color: rgba(237,234,226,.15); color: rgba(237,234,226,.4); }
+.header-tag { font-size: .6rem; color: rgba(237,234,226,.6); text-transform: uppercase; letter-spacing: .12em; text-align: right; line-height: 1.5; max-width: 50%; overflow: hidden; text-overflow: ellipsis; }
 
 .screen { display: none; }
 .screen.active { display: block; }
@@ -68,23 +69,26 @@ body { background: var(--cream); color: var(--text); font-family: 'Barlow', sans
 .section-label { font-size: .6rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
 .order-card { background: var(--white); border: 1px solid var(--border); border-left: 3px solid var(--navy); margin-bottom: 8px; cursor: pointer; transition: border-color .15s; display: flex; align-items: center; justify-content: space-between; padding: 11px 12px; }
 .order-card:hover { border-left-color: #c9a96e; }
+.order-card.is-new { border-left-color: var(--orange); background: var(--orange-bg); }
 .order-client { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 1rem; letter-spacing: .08em; text-transform: uppercase; color: var(--navy); }
 .order-meta { font-size: .65rem; color: var(--muted); margin-top: 2px; }
 .order-right { text-align: right; flex-shrink: 0; margin-left: 10px; }
 .order-pct { font-size: .7rem; font-weight: 700; color: var(--navy); }
-.order-mini-bar { height: 3px; background: var(--cream-dark); margin-top: 4px; width: 56px; overflow: hidden; display: flex; }
+.order-mini-bar { height: 3px; background: var(--cream-dark); margin-top: 4px; width: 56px; overflow: hidden; display: flex; margin-left: auto; }
 .mini-green  { height: 100%; background: var(--green); }
 .mini-orange { height: 100%; background: var(--orange); }
 .mini-red    { height: 100%; background: var(--red); }
 .missing-badge { background: var(--red); color: #fff; font-size: .58rem; font-weight: 700; padding: 2px 6px; text-transform: uppercase; margin-top: 4px; display: inline-block; }
 .partial-badge { background: var(--orange); color: #fff; font-size: .58rem; font-weight: 700; padding: 2px 6px; text-transform: uppercase; margin-top: 4px; display: inline-block; }
+.tag-rep { background: var(--cream-dark); color: var(--navy); font-size: .56rem; font-weight: 700; letter-spacing: .08em; padding: 2px 6px; text-transform: uppercase; margin-left: 6px; vertical-align: middle; font-family: 'Barlow', sans-serif; }
+.new-badge { background: var(--orange); color: #fff; font-size: .56rem; font-weight: 700; letter-spacing: .08em; padding: 2px 6px; text-transform: uppercase; margin-left: 6px; vertical-align: middle; font-family: 'Barlow', sans-serif; }
 .empty-home { color: var(--muted); font-size: .82rem; padding: 32px 16px; text-align: center; line-height: 1.8; }
 
 .form-header { background: var(--cream-dark); padding: 11px 16px; border-bottom: 1px solid var(--border); }
 .form-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: .9rem; letter-spacing: .15em; text-transform: uppercase; color: var(--navy); }
 .f-section { padding: 12px 16px 0; }
 .f-label { font-size: .6rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; color: var(--muted); margin-bottom: 5px; display: block; }
-.f-input { width: 100%; background: var(--white); border: 1px solid var(--border); color: var(--text); font-family: 'Barlow', sans-serif; font-size: .95rem; padding: 10px 12px; outline: none; transition: border-color .2s; }
+.f-input { width: 100%; background: var(--white); border: 1px solid var(--border); color: var(--text); font-family: 'Barlow', sans-serif; font-size: .95rem; padding: 10px 12px; outline: none; transition: border-color .2s; border-radius: 0; }
 .f-input:focus { border-color: var(--navy); }
 .f-input::placeholder { color: #bbb; }
 .grade-tabs { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 4px; }
@@ -108,10 +112,15 @@ body { background: var(--cream); color: var(--text); font-family: 'Barlow', sans
 .pi-remove:hover { color: var(--red); }
 .btn-save-order { background: var(--navy); border: none; color: var(--cream); cursor: pointer; font-family: 'Barlow', sans-serif; font-size: .8rem; font-weight: 700; letter-spacing: .14em; padding: 14px; text-transform: uppercase; width: calc(100% - 32px); margin: 14px 16px 90px; display: block; transition: background .2s; }
 .btn-save-order:hover { background: var(--navy-dark); }
+.btn-save-order:disabled { opacity: .5; cursor: not-allowed; }
 
 .ped-header { background: var(--navy); padding: 11px 16px; }
 .ped-client { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 1.05rem; letter-spacing: .1em; text-transform: uppercase; color: var(--cream); }
 .ped-date { font-size: .62rem; color: rgba(237,234,226,.5); margin-top: 2px; }
+.obs-box { margin: 8px 16px 0; background: var(--white); border: 1px solid var(--border); border-left: 3px solid var(--orange); padding: 8px 11px; font-size: .75rem; line-height: 1.4; }
+.obs-box b { font-size: .58rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 2px; }
+.dup-bar { margin: 8px 16px 0; background: var(--orange-bg); border: 1px solid var(--orange); padding: 9px 11px; display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: .72rem; line-height: 1.35; }
+.dup-bar button { background: var(--orange); border: none; color: #fff; cursor: pointer; font-family: 'Barlow', sans-serif; font-size: .66rem; font-weight: 700; letter-spacing: .08em; padding: 7px 10px; text-transform: uppercase; flex-shrink: 0; }
 .prog-wrap { padding: 10px 16px 0; }
 .prog-bar-bg { height: 5px; background: var(--cream-dark); overflow: hidden; display: flex; }
 .prog-fill { height: 100%; transition: width .3s; }
@@ -153,6 +162,24 @@ body { background: var(--cream); color: var(--text); font-family: 'Barlow', sans
 .st-zero    .qty-btn { border-color: var(--red);    background: var(--red-bg); }
 .st-zero    .qty-val { border-color: var(--red);    color: var(--red); }
 
+/* REPS (gerência) */
+.rep-card { background: var(--white); border: 1px solid var(--border); border-left: 3px solid var(--navy); margin-bottom: 8px; padding: 11px 12px; }
+.rep-actions { display: flex; gap: 6px; margin-top: 9px; flex-wrap: wrap; }
+.mini-btn { background: transparent; border: 1px solid var(--border); color: var(--navy); cursor: pointer; font-family: 'Barlow', sans-serif; font-size: .66rem; font-weight: 700; letter-spacing: .08em; padding: 7px 10px; text-transform: uppercase; transition: all .15s; }
+.mini-btn:hover { border-color: var(--navy); }
+.mini-btn.pri { background: var(--navy); border-color: var(--navy); color: var(--cream); }
+.mini-btn.danger { color: var(--red); margin-left: auto; }
+.rep-add { display: flex; gap: 6px; }
+.rep-add .f-input { flex: 1; }
+.rep-add button { background: var(--navy); border: none; color: var(--cream); cursor: pointer; font-family: 'Barlow', sans-serif; font-size: .72rem; font-weight: 700; letter-spacing: .1em; padding: 0 14px; text-transform: uppercase; }
+.rep-help { font-size: .68rem; color: var(--muted); line-height: 1.5; padding: 10px 16px 0; }
+
+/* TELA DO REPRESENTANTE */
+.ok-screen { text-align: center; padding: 70px 28px; }
+.ok-check { width: 64px; height: 64px; border-radius: 50%; background: var(--green); color: #fff; font-size: 2rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 18px; }
+.ok-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 1.5rem; letter-spacing: .1em; text-transform: uppercase; color: var(--navy); }
+.ok-text { font-size: .82rem; color: var(--muted); margin-top: 8px; line-height: 1.6; }
+
 .save-indicator { position: fixed; top: 58px; right: 12px; background: var(--navy); color: var(--cream); font-size: .62rem; font-weight: 700; letter-spacing: .1em; padding: 4px 10px; text-transform: uppercase; z-index: 300; opacity: 0; transition: opacity .3s; pointer-events: none; }
 .save-indicator.show { opacity: 1; }
 
@@ -162,11 +189,11 @@ body { background: var(--cream); color: var(--text); font-family: 'Barlow', sans
 .ab-pri { background: var(--cream); border: none; color: var(--navy); cursor: pointer; flex: 1; font-family: 'Barlow', sans-serif; font-size: .72rem; font-weight: 800; letter-spacing: .12em; padding: 9px; text-transform: uppercase; transition: opacity .2s; }
 .ab-pri:hover { opacity: .88; }
 
-.toast { background: var(--green); bottom: 72px; color: #fff; font-family: 'Barlow', sans-serif; font-size: .7rem; font-weight: 700; left: 50%; letter-spacing: .1em; opacity: 0; padding: 8px 16px; position: fixed; text-transform: uppercase; transform: translateX(-50%) translateY(8px); transition: all .3s; z-index: 400; pointer-events: none; }
+.toast { background: var(--green); bottom: 72px; color: #fff; font-family: 'Barlow', sans-serif; font-size: .7rem; font-weight: 700; left: 50%; letter-spacing: .1em; opacity: 0; padding: 8px 16px; position: fixed; text-transform: uppercase; transform: translateX(-50%) translateY(8px); transition: all .3s; z-index: 400; pointer-events: none; text-align: center; max-width: 90%; }
 .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
 @media print {
-  .app-header, .action-bar, .hint, #screenHome, #screenNew, .prog-wrap, .save-indicator, .loading-overlay, .login-screen { display: none !important; }
+  .app-header, .action-bar, .hint, #screenHome, #screenNew, #screenReps, #screenRep, #screenRepOk, .prog-wrap, .save-indicator, .loading-overlay, .login-screen, .dup-bar { display: none !important; }
   body { background: white; }
   .ped-header { background: #2C4272 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   .size-row.st-full    { background: #edf7ef !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
@@ -200,13 +227,16 @@ body { background: var(--cream); color: var(--text); font-family: 'Barlow', sans
   </div>
 </div>
 
+<datalist id="codeList"></datalist>
 <div class="save-indicator" id="saveIndicator">Salvando...</div>
 
+<!-- ═════════ HOME (gerência) ═════════ -->
 <div id="screenHome" class="screen active">
   <div class="app-header">
     <div><div class="logo">GUGĒ<span>J E A N S</span></div></div>
     <div class="header-actions">
-      <button class="header-action" onclick="goNew()">+ Novo Pedido</button>
+      <button class="header-action" onclick="goNew()">+ Pedido</button>
+      <button class="header-action" onclick="goReps()">Reps</button>
       <button class="header-action logout" onclick="doLogout()">Sair</button>
     </div>
   </div>
@@ -216,47 +246,18 @@ body { background: var(--cream); color: var(--text); font-family: 'Barlow', sans
   </div>
 </div>
 
+<!-- ═════════ NOVO PEDIDO (gerência) ═════════ -->
 <div id="screenNew" class="screen">
   <div class="app-header">
     <div><div class="logo">GUGĒ<span>J E A N S</span></div></div>
     <button class="header-action" onclick="goHome()">← Voltar</button>
   </div>
   <div class="form-header"><div class="form-title">Novo Pedido</div></div>
-  <div class="f-section" style="padding-top:14px">
-    <label class="f-label">Cliente</label>
-    <input class="f-input" type="text" id="newClient" placeholder="Nome da cliente..." />
-  </div>
-  <div class="f-section">
-    <label class="f-label">Código / Referência</label>
-    <input class="f-input" type="text" id="newCode" placeholder="Ex: GJ-001, Flare Escuro..." />
-  </div>
-  <div class="f-section">
-    <label class="f-label">Tipo de Grade</label>
-    <div class="grade-tabs">
-      <div class="g-tab active" data-grade="casual-pg"  onclick="setGrade(this)">Casual P–G</div>
-      <div class="g-tab"        data-grade="casual-pgg" onclick="setGrade(this)">Casual P–GG</div>
-      <div class="g-tab"        data-grade="j3646"      onclick="setGrade(this)">Jeans 36–46</div>
-      <div class="g-tab"        data-grade="j3844"      onclick="setGrade(this)">Jeans 38–44</div>
-      <div class="g-tab"        data-grade="custom"     onclick="setGrade(this)">Personalizado</div>
-    </div>
-  </div>
-  <div class="f-section">
-    <label class="f-label">Quantidades por Tamanho</label>
-    <div class="sizes-grid" id="sizesGrid"></div>
-    <button class="grade-full-btn" onclick="fillFull()">+ Grade completa — 1 peça de cada</button>
-  </div>
-  <div class="f-section">
-    <button class="btn-add-item" onclick="addItem()">+ Adicionar Peça</button>
-  </div>
-  <hr class="divider">
-  <div style="padding:10px 16px 0;display:flex;align-items:center;justify-content:space-between;">
-    <span style="font-size:.6rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--muted)">Peças no Pedido</span>
-    <span id="newCount" style="font-size:.68rem;font-weight:700;color:var(--navy)">0 peças</span>
-  </div>
-  <div class="items-preview" id="itemsPreview"></div>
+  <div id="mForm"></div>
   <button class="btn-save-order" onclick="saveOrder()">Salvar Pedido</button>
 </div>
 
+<!-- ═════════ PEDIDO ABERTO (separação) ═════════ -->
 <div id="screenOrder" class="screen">
   <div class="app-header">
     <div><div class="logo">GUGĒ<span>J E A N S</span></div></div>
@@ -266,6 +267,8 @@ body { background: var(--cream); color: var(--text); font-family: 'Barlow', sans
     <div class="ped-client" id="viewClient">—</div>
     <div class="ped-date"   id="viewDate">—</div>
   </div>
+  <div id="viewObs"></div>
+  <div id="dupBar"></div>
   <div class="print-stats" id="printStats"></div>
   <div class="prog-wrap">
     <div class="prog-bar-bg">
@@ -289,6 +292,50 @@ body { background: var(--cream); color: var(--text); font-family: 'Barlow', sans
   </div>
 </div>
 
+<!-- ═════════ REPRESENTANTES (gerência) ═════════ -->
+<div id="screenReps" class="screen">
+  <div class="app-header">
+    <div><div class="logo">GUGĒ<span>J E A N S</span></div></div>
+    <button class="header-action" onclick="goHome()">← Voltar</button>
+  </div>
+  <div class="form-header"><div class="form-title">Representantes e Vendedores</div></div>
+  <div class="f-section" style="padding-top:14px">
+    <label class="f-label">Novo representante</label>
+    <div class="rep-add">
+      <input class="f-input" type="text" id="repName" maxlength="40" placeholder="Nome (ex: Junior)" onkeydown="if(event.key==='Enter')addRep()" />
+      <button onclick="addRep()">Criar link</button>
+    </div>
+  </div>
+  <p class="rep-help">Cada pessoa recebe um link próprio. Ela abre sem senha, lança o pedido e envia — o pedido aparece na sua lista com a etiqueta <b>REP</b> e <b>NOVO</b>. Ela não vê nenhum outro pedido. Para cortar o acesso, toque em <b>Desativar</b>.</p>
+  <div class="home-section" style="padding-top:14px">
+    <div class="section-label">Links ativos</div>
+    <div id="repList"></div>
+  </div>
+</div>
+
+<!-- ═════════ TELA DO REPRESENTANTE (link) ═════════ -->
+<div id="screenRep" class="screen">
+  <div class="app-header">
+    <div><div class="logo">GUGĒ<span>J E A N S</span></div></div>
+    <div class="header-tag" id="repHeaderTag">Lançar pedido</div>
+  </div>
+  <div class="form-header"><div class="form-title">Novo Pedido</div></div>
+  <div id="rForm"></div>
+  <button class="btn-save-order" id="sendBtn" onclick="sendRepOrder()">Enviar Pedido para a GUGĒ</button>
+</div>
+
+<div id="screenRepOk" class="screen">
+  <div class="app-header">
+    <div><div class="logo">GUGĒ<span>J E A N S</span></div></div>
+  </div>
+  <div class="ok-screen">
+    <div class="ok-check">✓</div>
+    <div class="ok-title">Pedido enviado!</div>
+    <p class="ok-text">A GUGĒ já recebeu o seu pedido e vai separar.</p>
+    <button class="btn-save-order" style="margin:28px auto 0;max-width:320px" onclick="newRepOrder()">Fazer novo pedido</button>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script type="module">
@@ -296,7 +343,7 @@ import { initializeApp }                          from "https://www.gstatic.com/
 import { getAuth, signInWithEmailAndPassword,
          signOut, onAuthStateChanged }            from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 import { getFirestore, collection, doc,
-         addDoc, setDoc, deleteDoc,
+         addDoc, updateDoc, deleteDoc,
          onSnapshot, query, orderBy }             from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 // ── Firebase ──
@@ -309,109 +356,62 @@ const firebaseConfig = {
   appId:             "1:902434016307:web:a551b681b5fe121daaa746"
 };
 
-// O email é fixo (não é segredo). A SENHA não fica aqui — o usuário digita.
-// O Firebase verifica se email+senha batem. Se não bater, nega acesso.
+// O email é fixo (não é segredo). A SENHA nunca fica no código: o Firebase confere.
 const APP_EMAIL = "app@guge-pedidos.internal";
 
 const app  = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db   = getFirestore(app);
 const ordersCol = collection(db, "pedidos");
+const repsCol   = collection(db, "representantes");
 
-// ── Grades ──
+// ── Modo representante (link com ?rep=...&k=...) ──
+const params   = new URLSearchParams(location.search);
+const REP_ID   = params.get('rep');
+const REP_KEY  = params.get('k');
+const REP_NAME = (params.get('n') || '').slice(0, 40);
+const IS_REP   = !!(REP_ID && REP_KEY);
+
+// ── Constantes ──
+const ORDER = ['P','M','G','GG','36','38','40','42','44','46'];
 const GRADES = {
   'casual-pg':  ['P','M','G'],
   'casual-pgg': ['P','M','G','GG'],
   'j3646':      ['36','38','40','42','44','46'],
   'j3844':      ['38','40','42','44'],
-  'custom':     ['P','M','G','GG','36','38','40','42','44','46'],
+  'custom':     ORDER,
 };
 const GL = {
   'casual-pg':'Casual P–G','casual-pgg':'Casual P–GG',
   'j3646':'Jeans 36–46','j3844':'Jeans 38–44','custom':'Personalizado'
 };
 
-// ── State ──
-let orders     = [];
-let draftItems = [];
-let curGrade   = 'casual-pg';
-let curOrderId = null;
-let saveTimer  = null;
-let unsubOrders = null;
+// ── Estado ──
+const forms = { m:{draft:[],grade:'casual-pg'}, r:{draft:[],grade:'casual-pg'} };
+let orders = [], reps = [];
+let curOrderId = null, saveTimer = null;
+let unsubOrders = null, unsubReps = null;
 
-// ── Auth state ──
-onAuthStateChanged(auth, (user) => {
-  document.getElementById('loadingOverlay').classList.add('hidden');
-  if (user) {
-    document.getElementById('loginScreen').classList.add('hidden');
-    startListening();
-  } else {
-    if (unsubOrders) { unsubOrders(); unsubOrders = null; }
-    orders = [];
-    document.getElementById('loginScreen').classList.remove('hidden');
-    document.getElementById('loginInput').value = '';
-    document.getElementById('loginError').textContent = '';
-  }
-});
+// ── Utilidades ──
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const normCode = c => String(c).trim().replace(/\s+/g,' ').toUpperCase();
+const sortedSizes = item => Object.entries(item.sizes).sort((a,b) => ORDER.indexOf(a[0]) - ORDER.indexOf(b[0]));
 
-function startListening() {
-  if (unsubOrders) unsubOrders();
-  const q = query(ordersCol, orderBy("createdAt","desc"));
-  unsubOrders = onSnapshot(q, (snap) => {
-    orders = snap.docs.map(d => ({ firestoreId: d.id, ...d.data() }));
-    renderHome();
-    if (curOrderId) renderOrderView();
-  }, (err) => {
-    console.error(err);
-    toast('Erro ao carregar dados', 'var(--red)');
-  });
-}
-
-// ── Login ──
-// A senha que o usuário digita vai direto pro Firebase — nunca fica no código.
-window.doLogin = async function() {
-  const senha = document.getElementById('loginInput').value.trim();
-  const errEl = document.getElementById('loginError');
-  const btn   = document.getElementById('loginBtn');
-  errEl.textContent = '';
-  if (!senha) { errEl.textContent = 'Digite a senha.'; return; }
-  btn.disabled = true;
-  btn.textContent = 'Entrando...';
-  try {
-    await signInWithEmailAndPassword(auth, APP_EMAIL, senha);
-    // onAuthStateChanged cuida do resto
-  } catch(e) {
-    errEl.textContent = 'Senha incorreta.';
-    document.getElementById('loginInput').value = '';
-    document.getElementById('loginInput').focus();
-  } finally {
-    btn.disabled = false;
-    btn.textContent = 'Entrar';
-  }
-};
-
-window.doLogout = async function() {
-  await signOut(auth);
-  show('screenHome');
-};
-
-// ── Helpers ──
 function show(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
+  $(id).classList.add('active');
   window.scrollTo(0,0);
 }
-
 function toast(msg, color) {
-  const el = document.getElementById('toast');
+  const el = $('toast');
   el.textContent = msg;
   el.style.background = color || 'var(--green)';
   el.classList.add('show');
-  setTimeout(() => el.classList.remove('show'), 2400);
+  setTimeout(() => el.classList.remove('show'), 2600);
 }
-
 function showSaving() {
-  const el = document.getElementById('saveIndicator');
+  const el = $('saveIndicator');
   el.textContent = 'Salvando...';
   el.classList.add('show');
   clearTimeout(saveTimer);
@@ -421,35 +421,231 @@ function showSaving() {
   }, 800);
 }
 
-// ── Nav ──
-window.goHome  = () => { show('screenHome'); renderHome(); };
-window.goNew   = () => {
-  draftItems=[]; curGrade='casual-pg';
-  document.getElementById('newClient').value='';
-  document.getElementById('newCode').value='';
-  renderSizes(); renderPreview(); show('screenNew');
+// ── Higieniza o que vem do banco (pedidos de representantes são "de fora") ──
+function clean(d, id) {
+  const items = (Array.isArray(d.items) ? d.items : []).slice(0, 200).map(it => {
+    const sizes = {}, found = {};
+    ORDER.forEach(s => {
+      const q = Number(it?.sizes?.[s]);
+      if (Number.isInteger(q) && q > 0 && q <= 999) {
+        sizes[s] = q;
+        const f = it?.found?.[s];
+        found[s] = (typeof f === 'number' && f >= 0) ? Math.min(f, q) : null;
+      }
+    });
+    return {
+      id: Number(it?.id) || 0,
+      code: String(it?.code ?? '').slice(0, 80),
+      grade: GL[it?.grade] ? it.grade : 'custom',
+      sizes, found
+    };
+  }).filter(it => Object.keys(it.sizes).length);
+  return {
+    firestoreId: id,
+    client: String(d.client ?? '').slice(0, 80),
+    obs: String(d.obs ?? '').slice(0, 300),
+    date: String(d.date ?? ''),
+    createdAt: Number(d.createdAt) || 0,
+    origem: d.origem === 'representante' ? 'representante' : 'gerencia',
+    repId: String(d.repId ?? '').slice(0, 60),
+    repName: String(d.repName ?? '').slice(0, 40),
+    visto: d.visto === false ? false : true,
+    items
+  };
+}
+
+// ── Une referências repetidas (soma as quantidades) ──
+function mergeGrade(a, b) {
+  if (a === b) return a;
+  const casual = ['casual-pg','casual-pgg'];
+  if (casual.includes(a) && casual.includes(b)) return 'casual-pgg';
+  return 'custom';
+}
+function mergeDuplicates(items) {
+  const out = [];
+  items.forEach(it => {
+    const ex = out.find(o => normCode(o.code) === normCode(it.code));
+    if (!ex) { out.push({ ...it, sizes:{...it.sizes}, found:{...it.found} }); return; }
+    ex.grade = mergeGrade(ex.grade, it.grade);
+    Object.entries(it.sizes).forEach(([s,q]) => {
+      ex.sizes[s] = (ex.sizes[s] || 0) + q;
+      const a = ex.found[s] ?? null, b = it.found[s] ?? null;
+      ex.found[s] = (a === null && b === null) ? null : (a || 0) + (b || 0);
+    });
+  });
+  return out;
+}
+const hasDuplicates = o => mergeDuplicates(o.items).length !== o.items.length;
+
+// ── Formulário (usado pela gerência "m" e pelo representante "r") ──
+function formHTML(f, clientLabel, clientPh) {
+  return `
+  <div class="f-section" style="padding-top:14px">
+    <label class="f-label">${clientLabel}</label>
+    <input class="f-input" type="text" id="${f}Client" maxlength="80" autocomplete="off" placeholder="${clientPh}" />
+  </div>
+  <div class="f-section">
+    <label class="f-label">Código / Referência</label>
+    <input class="f-input" type="text" id="${f}Code" list="codeList" maxlength="80" autocomplete="off" placeholder="Ex: 0119152 VESTIDO LONGO" />
+  </div>
+  <div class="f-section">
+    <label class="f-label">Tipo de Grade</label>
+    <div class="grade-tabs" id="${f}Tabs"></div>
+  </div>
+  <div class="f-section">
+    <label class="f-label">Quantidades por Tamanho</label>
+    <div class="sizes-grid" id="${f}Sizes"></div>
+    <button class="grade-full-btn" onclick="fillFull('${f}')">+ Grade completa — 1 peça de cada</button>
+  </div>
+  <div class="f-section">
+    <button class="btn-add-item" onclick="addItem('${f}')">+ Adicionar Peça</button>
+  </div>
+  <hr class="divider">
+  <div style="padding:10px 16px 0;display:flex;align-items:center;justify-content:space-between;">
+    <span style="font-size:.6rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--muted)">Peças no Pedido</span>
+    <span id="${f}Count" style="font-size:.68rem;font-weight:700;color:var(--navy)">0 peças</span>
+  </div>
+  <div class="items-preview" id="${f}Preview"></div>
+  <div class="f-section" style="padding-top:14px">
+    <label class="f-label">Observação (opcional)</label>
+    <input class="f-input" type="text" id="${f}Obs" maxlength="300" autocomplete="off" placeholder="Ex: entregar até sexta..." />
+  </div>`;
+}
+
+function renderTabs(f) {
+  $(f+'Tabs').innerHTML = Object.keys(GRADES).map(g =>
+    `<div class="g-tab ${forms[f].grade===g?'active':''}" onclick="setGrade('${f}','${g}')">${GL[g]}</div>`).join('');
+}
+function renderSizes(f) {
+  $(f+'Sizes').innerHTML = GRADES[forms[f].grade].map(s => `
+    <div class="size-block">
+      <span class="s-label">${s}</span>
+      <input class="s-input" type="number" inputmode="numeric" min="0" max="99" placeholder="0" data-size="${s}" />
+    </div>`).join('');
+}
+function renderPreview(f) {
+  const draft = forms[f].draft;
+  let total = 0; draft.forEach(i => Object.values(i.sizes).forEach(q => total += q));
+  $(f+'Count').textContent = total + (total === 1 ? ' peça' : ' peças');
+  $(f+'Preview').innerHTML = draft.map(item => {
+    const st = sortedSizes(item).map(([s,q]) => `${s}:${q}`).join('  ');
+    return `<div class="preview-item">
+      <div><div class="pi-code">${esc(item.code)}</div><div class="pi-detail">${GL[item.grade]} · ${st}</div></div>
+      <button class="pi-remove" onclick="removeDraft('${f}',${item.id})">✕</button>
+    </div>`;
+  }).join('');
+}
+function resetForm(f) {
+  forms[f] = { draft:[], grade:'casual-pg' };
+  ['Client','Code','Obs'].forEach(k => $(f+k).value = '');
+  renderTabs(f); renderSizes(f); renderPreview(f);
+}
+function refreshCodeList() {
+  const set = new Set();
+  orders.forEach(o => o.items.forEach(i => set.add(i.code)));
+  forms.m.draft.concat(forms.r.draft).forEach(i => set.add(i.code));
+  $('codeList').innerHTML = [...set].filter(Boolean).slice(0,500).map(c => `<option value="${esc(c)}">`).join('');
+}
+
+window.setGrade = (f, g) => { forms[f].grade = g; renderTabs(f); renderSizes(f); };
+window.fillFull = f => document.querySelectorAll(`#${f}Sizes .s-input`).forEach(i => i.value = 1);
+
+window.addItem = f => {
+  const code = $(f+'Code').value.trim().replace(/\s+/g,' ');
+  if (!code) { toast('Informe o código da peça','var(--red)'); return; }
+  const sizes = {}, found = {};
+  document.querySelectorAll(`#${f}Sizes .s-input`).forEach(i => {
+    const q = parseInt(i.value) || 0;
+    if (q > 0) { sizes[i.dataset.size] = q; found[i.dataset.size] = null; }
+  });
+  if (!Object.keys(sizes).length) { toast('Informe ao menos um tamanho','var(--red)'); return; }
+  const before = forms[f].draft.length;
+  forms[f].draft = mergeDuplicates([...forms[f].draft, { code, grade: forms[f].grade, sizes, found, id: Date.now() }]);
+  const merged = forms[f].draft.length === before;
+  $(f+'Code').value = '';
+  document.querySelectorAll(`#${f}Sizes .s-input`).forEach(i => i.value = '');
+  renderPreview(f); refreshCodeList();
+  toast(merged ? 'Somado à referência já lançada' : 'Peça adicionada');
+  $(f+'Code').focus();
 };
-window.goOrder = (id) => { curOrderId=id; renderOrderView(); show('screenOrder'); };
+window.removeDraft = (f, id) => { forms[f].draft = forms[f].draft.filter(i => i.id !== id); renderPreview(f); };
+
+// ── Autenticação (gerência) ──
+window.doLogin = async () => {
+  const senha = $('loginInput').value.trim();
+  const errEl = $('loginError'), btn = $('loginBtn');
+  errEl.textContent = '';
+  if (!senha) { errEl.textContent = 'Digite a senha.'; return; }
+  btn.disabled = true; btn.textContent = 'Entrando...';
+  try {
+    await signInWithEmailAndPassword(auth, APP_EMAIL, senha);
+  } catch(e) {
+    errEl.textContent = 'Senha incorreta.';
+    $('loginInput').value = ''; $('loginInput').focus();
+  } finally {
+    btn.disabled = false; btn.textContent = 'Entrar';
+  }
+};
+window.doLogout = async () => { await signOut(auth); show('screenHome'); };
+
+function startListening() {
+  if (unsubOrders) unsubOrders();
+  if (unsubReps) unsubReps();
+  unsubOrders = onSnapshot(query(ordersCol, orderBy("createdAt","desc")), snap => {
+    orders = snap.docs.map(d => clean(d.data(), d.id));
+    renderHome(); refreshCodeList(); renderReps();
+    if (curOrderId && $('screenOrder').classList.contains('active')) renderOrderView();
+  }, err => { console.error(err); toast('Erro ao carregar dados','var(--red)'); });
+  unsubReps = onSnapshot(repsCol, snap => {
+    reps = snap.docs.map(d => ({ id:d.id, name:String(d.data().name||'').slice(0,40), key:String(d.data().key||'') }))
+                    .sort((a,b) => a.name.localeCompare(b.name));
+    renderReps();
+  });
+}
+
+// ── Navegação (gerência) ──
+window.goHome = () => { show('screenHome'); renderHome(); };
+window.goNew  = () => { resetForm('m'); show('screenNew'); };
+window.goReps = () => { renderReps(); show('screenReps'); };
+window.goOrder = async id => {
+  curOrderId = id; renderOrderView(); show('screenOrder');
+  const o = orders.find(x => x.firestoreId === id);
+  if (o && o.origem === 'representante' && !o.visto) {
+    try { await updateDoc(doc(db,'pedidos',id), { visto: true }); } catch(e) { console.error(e); }
+  }
+};
 
 // ── Home ──
+function calcStats(o) {
+  let full=0, partial=0, zero=0, pend=0;
+  o.items.forEach(item => Object.entries(item.sizes).forEach(([s,q]) => {
+    const f = item.found[s];
+    if (f === null) pend++; else if (f >= q) full++; else if (f > 0) partial++; else zero++;
+  }));
+  return { full, partial, zero, pend };
+}
+const totalPcs = o => o.items.reduce((t,i) => t + Object.values(i.sizes).reduce((a,b) => a+b, 0), 0);
+
 function renderHome() {
-  const el = document.getElementById('orderList');
+  const el = $('orderList');
   if (!orders.length) {
-    el.innerHTML='<p class="empty-home">Nenhum pedido ainda.<br>Toque em <strong>+ Novo Pedido</strong> para começar.</p>';
+    el.innerHTML = '<p class="empty-home">Nenhum pedido ainda.<br>Toque em <strong>+ Pedido</strong> para começar.</p>';
     return;
   }
   el.innerHTML = orders.map(o => {
-    const s=calcStats(o), total=s.full+s.partial+s.zero+s.pend;
-    const pF=total>0?Math.round(s.full/total*100):0;
-    const pP=total>0?Math.round(s.partial/total*100):0;
-    const pZ=total>0?Math.round(s.zero/total*100):0;
-    let badge='';
-    if (s.zero>0)         badge=`<div class="missing-badge">✗ ${s.zero} zerado${s.zero>1?'s':''}</div>`;
-    else if (s.partial>0) badge=`<div class="partial-badge">◑ ${s.partial} parcial${s.partial>1?'is':''}</div>`;
-    return `<div class="order-card" onclick="goOrder('${o.firestoreId}')">
+    const s = calcStats(o), total = s.full+s.partial+s.zero+s.pend;
+    const pF = total ? Math.round(s.full/total*100) : 0;
+    const pP = total ? Math.round(s.partial/total*100) : 0;
+    const pZ = total ? Math.round(s.zero/total*100) : 0;
+    let badge = '';
+    if (s.zero > 0)         badge = `<div class="missing-badge">✗ ${s.zero} zerado${s.zero>1?'s':''}</div>`;
+    else if (s.partial > 0) badge = `<div class="partial-badge">◑ ${s.partial} parcial${s.partial>1?'is':''}</div>`;
+    const isRep = o.origem === 'representante';
+    const isNew = isRep && !o.visto;
+    return `<div class="order-card ${isNew?'is-new':''}" onclick="goOrder('${esc(o.firestoreId)}')">
       <div>
-        <div class="order-client">${o.client}</div>
-        <div class="order-meta">${o.date} · ${totalPcs(o)} peças · ${o.items.length} ref.</div>
+        <div class="order-client">${esc(o.client)}${isRep?`<span class="tag-rep">Rep${o.repName?' · '+esc(o.repName):''}</span>`:''}${isNew?'<span class="new-badge">Novo</span>':''}</div>
+        <div class="order-meta">${esc(o.date)} · ${totalPcs(o)} peças · ${o.items.length} ref.</div>
       </div>
       <div class="order-right">
         <div class="order-pct">${pF}% ok</div>
@@ -464,100 +660,61 @@ function renderHome() {
   }).join('');
 }
 
-// ── Form ──
-window.setGrade = (el) => {
-  document.querySelectorAll('.g-tab').forEach(t=>t.classList.remove('active'));
-  el.classList.add('active');
-  curGrade=el.dataset.grade;
-  renderSizes();
-};
-
-function renderSizes() {
-  document.getElementById('sizesGrid').innerHTML = GRADES[curGrade].map(s=>`
-    <div class="size-block">
-      <span class="s-label">${s}</span>
-      <input class="s-input" type="number" min="0" max="99" placeholder="0" data-size="${s}" />
-    </div>`).join('');
-}
-
-window.fillFull = () => document.querySelectorAll('.s-input').forEach(i=>i.value=1);
-
-window.addItem = () => {
-  const code=document.getElementById('newCode').value.trim();
-  if (!code) { toast('Informe o código da peça','var(--red)'); return; }
-  const sizes={};
-  document.querySelectorAll('.s-input').forEach(i=>{ const q=parseInt(i.value)||0; if(q>0)sizes[i.dataset.size]=q; });
-  if (!Object.keys(sizes).length) { toast('Informe ao menos um tamanho','var(--red)'); return; }
-  const found={};
-  Object.keys(sizes).forEach(s=>found[s]=null);
-  draftItems.push({code,grade:curGrade,sizes,found,id:Date.now()});
-  document.getElementById('newCode').value='';
-  document.querySelectorAll('.s-input').forEach(i=>i.value='');
-  renderPreview();
-};
-
-window.removeDraft = (id) => { draftItems=draftItems.filter(i=>i.id!==id); renderPreview(); };
-
-function renderPreview() {
-  const el=document.getElementById('itemsPreview');
-  let total=0; draftItems.forEach(i=>Object.values(i.sizes).forEach(q=>total+=q));
-  document.getElementById('newCount').textContent=total+' peças';
-  if (!draftItems.length) { el.innerHTML=''; return; }
-  el.innerHTML=draftItems.map(item=>{
-    const st=Object.entries(item.sizes).map(([s,q])=>`${s}:${q}`).join(' ');
-    return `<div class="preview-item">
-      <div><div class="pi-code">${item.code}</div><div class="pi-detail">${GL[item.grade]} · ${st}</div></div>
-      <button class="pi-remove" onclick="removeDraft(${item.id})">✕</button>
-    </div>`;
-  }).join('');
-}
-
+// ── Salvar pedido (gerência) ──
 window.saveOrder = async () => {
-  const client=document.getElementById('newClient').value.trim();
-  if (!client)            { toast('Informe o nome da cliente','var(--red)'); return; }
-  if (!draftItems.length) { toast('Adicione ao menos uma peça','var(--red)'); return; }
+  const client = $('mClient').value.trim();
+  if (!client)               { toast('Informe o nome da cliente','var(--red)'); return; }
+  if (!forms.m.draft.length) { toast('Adicione ao menos uma peça','var(--red)'); return; }
   try {
     showSaving();
-    await addDoc(ordersCol,{
-      client, date:new Date().toLocaleDateString('pt-BR'),
-      createdAt:Date.now(), items:draftItems.map(i=>({...i}))
+    await addDoc(ordersCol, {
+      client, obs: $('mObs').value.trim(),
+      date: new Date().toLocaleDateString('pt-BR'),
+      createdAt: Date.now(), origem: 'gerencia', visto: true,
+      items: forms.m.draft.map(i => ({ ...i }))
     });
     toast('Pedido salvo!');
-    setTimeout(()=>window.goHome(),600);
-  } catch(e) { toast('Erro ao salvar: '+e.message,'var(--red)'); }
+    setTimeout(() => window.goHome(), 600);
+  } catch(e) { toast('Erro ao salvar: ' + e.message, 'var(--red)'); }
 };
 
-// ── Order view ──
+// ── Pedido aberto ──
 function renderOrderView() {
-  const o=orders.find(x=>x.firestoreId===curOrderId);
+  const o = orders.find(x => x.firestoreId === curOrderId);
   if (!o) return;
-  document.getElementById('viewClient').textContent=o.client;
-  document.getElementById('viewDate').textContent=o.date+' · '+totalPcs(o)+' peças · '+o.items.length+' ref.';
-  document.getElementById('orderItems').innerHTML=o.items.map(item=>{
-    const allFull  =Object.entries(item.sizes).every(([s,q])=>item.found[s]===q);
-    const anyFilled=Object.entries(item.sizes).some(([s])=>item.found[s]!==null);
+  const isRep = o.origem === 'representante';
+  $('viewClient').textContent = o.client;
+  $('viewDate').textContent = `${o.date} · ${totalPcs(o)} peças · ${o.items.length} ref.` + (isRep ? ` · Rep${o.repName?': '+o.repName:''}` : '');
+  $('viewObs').innerHTML = o.obs ? `<div class="obs-box"><b>Observação</b>${esc(o.obs)}</div>` : '';
+  $('dupBar').innerHTML = hasDuplicates(o)
+    ? `<div class="dup-bar"><span>Há referências repetidas neste pedido.</span><button onclick="unirRepetidos()">Unir repetidos</button></div>` : '';
+
+  $('orderItems').innerHTML = o.items.map(item => {
+    const entries = sortedSizes(item);
+    const allFull   = entries.every(([s,q]) => item.found[s] === q);
+    const anyFilled = entries.some(([s]) => item.found[s] !== null);
     return `<div class="ped-item-card">
       <div class="ped-item-head">
-        <div><div class="ped-item-code">${item.code}</div><div class="ped-item-grade">${GL[item.grade]||''}</div></div>
-        ${allFull&&anyFilled?'<span class="item-ok-badge">✓ Completo</span>':''}
+        <div><div class="ped-item-code">${esc(item.code)}</div><div class="ped-item-grade">${GL[item.grade]}</div></div>
+        ${allFull && anyFilled ? '<span class="item-ok-badge">✓ Completo</span>' : ''}
       </div>
       <div class="size-rows">
-        ${Object.entries(item.sizes).map(([s,q])=>{
-          const found=item.found[s];
-          let cls='',statusTxt='',disp=found===null?0:found;
-          if(found===null)  {cls='';          statusTxt='Pendente';}
-          else if(found>=q) {cls='st-full';   statusTxt='Completo ✓';}
-          else if(found>0)  {cls='st-partial';statusTxt=`Falta ${q-found} peça${q-found>1?'s':''}`;}
-          else              {cls='st-zero';   statusTxt='Não encontrado ✗';}
+        ${entries.map(([s,q]) => {
+          const found = item.found[s];
+          let cls = '', statusTxt = '', disp = found === null ? 0 : found;
+          if (found === null)   { cls = '';           statusTxt = 'Pendente'; }
+          else if (found >= q)  { cls = 'st-full';    statusTxt = 'Completo ✓'; }
+          else if (found > 0)   { cls = 'st-partial'; statusTxt = `Falta ${q-found} peça${q-found>1?'s':''}`; }
+          else                  { cls = 'st-zero';    statusTxt = 'Não encontrado ✗'; }
           return `<div class="size-row ${cls}">
             <div class="sr-info">
               <div class="sr-top"><span class="sr-size">Tam. ${s}</span><span class="sr-pedido">/ ${q} pedido</span></div>
               <div class="sr-status">${statusTxt}</div>
             </div>
             <div class="qty-group">
-              <button class="qty-btn" onclick="changeQty('${o.firestoreId}',${item.id},'${s}',${q},-1)">−</button>
+              <button class="qty-btn" onclick="changeQty('${esc(o.firestoreId)}',${item.id},'${s}',${q},-1)">−</button>
               <div class="qty-val">${disp}</div>
-              <button class="qty-btn" onclick="changeQty('${o.firestoreId}',${item.id},'${s}',${q},+1)">+</button>
+              <button class="qty-btn" onclick="changeQty('${esc(o.firestoreId)}',${item.id},'${s}',${q},1)">+</button>
             </div>
           </div>`;
         }).join('')}
@@ -567,70 +724,173 @@ function renderOrderView() {
   updateProgress(o);
 }
 
-window.changeQty = async (orderId,itemId,size,max,delta) => {
-  const o=orders.find(x=>x.firestoreId===orderId); if(!o)return;
-  const item=o.items.find(i=>i.id===itemId); if(!item)return;
-  const cur=item.found[size]===null?0:item.found[size];
-  item.found[size]=Math.max(0,Math.min(max,cur+delta));
+window.changeQty = async (orderId, itemId, size, max, delta) => {
+  const o = orders.find(x => x.firestoreId === orderId); if (!o) return;
+  const item = o.items.find(i => i.id === itemId); if (!item) return;
+  const cur = item.found[size] === null ? 0 : item.found[size];
+  item.found[size] = Math.max(0, Math.min(max, cur + delta));
   renderOrderView();
   try {
     showSaving();
-    const {firestoreId,...data}=o;
-    await setDoc(doc(db,'pedidos',orderId),data);
+    await updateDoc(doc(db,'pedidos',orderId), { items: o.items });
   } catch(e) { toast('Erro ao salvar','var(--red)'); }
 };
 
-function calcStats(o) {
-  let full=0,partial=0,zero=0,pend=0;
-  o.items.forEach(item=>Object.entries(item.sizes).forEach(([s,q])=>{
-    const f=item.found[s];
-    if(f===null)pend++; else if(f>=q)full++; else if(f>0)partial++; else zero++;
-  }));
-  return {full,partial,zero,pend};
-}
+window.unirRepetidos = async () => {
+  const o = orders.find(x => x.firestoreId === curOrderId); if (!o) return;
+  o.items = mergeDuplicates(o.items);
+  renderOrderView();
+  try {
+    showSaving();
+    await updateDoc(doc(db,'pedidos',curOrderId), { items: o.items });
+    toast('Referências unidas!');
+  } catch(e) { toast('Erro ao salvar','var(--red)'); }
+};
 
-function totalPcs(o){let t=0;o.items.forEach(i=>Object.values(i.sizes).forEach(q=>t+=q));return t;}
-
-function updateProgress(o){
-  const s=calcStats(o),total=s.full+s.partial+s.zero+s.pend;
-  const pF=total>0?Math.round(s.full/total*100):0;
-  const pP=total>0?Math.round(s.partial/total*100):0;
-  const pZ=total>0?Math.round(s.zero/total*100):0;
-  document.getElementById('progGreen').style.width =pF+'%';
-  document.getElementById('progOrange').style.width=pP+'%';
-  document.getElementById('progRed').style.width   =pZ+'%';
-  document.getElementById('statOk').textContent  =`✓ ${s.full} completos`;
-  document.getElementById('statPart').textContent=`◑ ${s.partial} parciais`;
-  document.getElementById('statZero').textContent=`✗ ${s.zero} zerados`;
-  document.getElementById('statPend').textContent=`◦ ${s.pend} pendentes`;
-  document.getElementById('printStats').textContent=
-    `GUGĒ JEANS · ${o.client} · ${o.date} · Completos: ${s.full}  Parciais: ${s.partial}  Zerados: ${s.zero}`;
+function updateProgress(o) {
+  const s = calcStats(o), total = s.full+s.partial+s.zero+s.pend;
+  const pF = total ? Math.round(s.full/total*100) : 0;
+  const pP = total ? Math.round(s.partial/total*100) : 0;
+  const pZ = total ? Math.round(s.zero/total*100) : 0;
+  $('progGreen').style.width  = pF+'%';
+  $('progOrange').style.width = pP+'%';
+  $('progRed').style.width    = pZ+'%';
+  $('statOk').textContent   = `✓ ${s.full} completos`;
+  $('statPart').textContent = `◑ ${s.partial} parciais`;
+  $('statZero').textContent = `✗ ${s.zero} zerados`;
+  $('statPend').textContent = `◦ ${s.pend} pendentes`;
+  $('printStats').textContent =
+    `GUGĒ JEANS · ${o.client} · ${o.date} · Completos: ${s.full}  Parciais: ${s.partial}  Zerados: ${s.zero}  Pendentes: ${s.pend}`;
 }
 
 window.deleteOrder = async () => {
-  const o=orders.find(x=>x.firestoreId===curOrderId);
-  if(!confirm(`Excluir pedido de ${o?o.client:''}?`))return;
+  const o = orders.find(x => x.firestoreId === curOrderId);
+  if (!confirm(`Excluir pedido de ${o ? o.client : ''}?`)) return;
   try { await deleteDoc(doc(db,'pedidos',curOrderId)); window.goHome(); }
-  catch(e){ toast('Erro ao excluir','var(--red)'); }
+  catch(e) { toast('Erro ao excluir','var(--red)'); }
 };
 
 window.copyOrder = () => {
-  const o=orders.find(x=>x.firestoreId===curOrderId); if(!o)return;
-  let t=`GUGĒ JEANS — SEPARAÇÃO\n${'─'.repeat(36)}\nCliente: ${o.client}\nData: ${o.date}\n${'─'.repeat(36)}\n`;
-  o.items.forEach((item,i)=>{
-    t+=`\n${String(i+1).padStart(2,'0')}. ${item.code} [${GL[item.grade]}]\n`;
-    Object.entries(item.sizes).forEach(([s,q])=>{
-      const f=item.found[s];
-      const info=f===null?'pendente':f>=q?`${f}/${q} ✓`:f>0?`${f}/${q} — falta ${q-f}`:`0/${q} ✗`;
-      t+=`    Tam.${s.padEnd(4)} — ${info}\n`;
+  const o = orders.find(x => x.firestoreId === curOrderId); if (!o) return;
+  let t = `GUGĒ JEANS — SEPARAÇÃO\n${'─'.repeat(36)}\nCliente: ${o.client}\nData: ${o.date}\n`;
+  if (o.obs) t += `Obs: ${o.obs}\n`;
+  t += `${'─'.repeat(36)}\n`;
+  o.items.forEach((item,i) => {
+    t += `\n${String(i+1).padStart(2,'0')}. ${item.code} [${GL[item.grade]}]\n`;
+    sortedSizes(item).forEach(([s,q]) => {
+      const f = item.found[s];
+      const info = f===null ? 'pendente' : f>=q ? `${f}/${q} ✓` : f>0 ? `${f}/${q} — falta ${q-f}` : `0/${q} ✗ não encontrado`;
+      t += `    Tam.${s.padEnd(4)} — ${info}\n`;
     });
   });
-  const s=calcStats(o);
-  t+=`\n${'─'.repeat(36)}\nCompletos: ${s.full}  Parciais: ${s.partial}  Zerados: ${s.zero}  Pendentes: ${s.pend}\n`;
-  navigator.clipboard.writeText(t).then(()=>toast('Copiado!'));
+  const s = calcStats(o);
+  t += `\n${'─'.repeat(36)}\nCompletos: ${s.full}  Parciais: ${s.partial}  Zerados: ${s.zero}  Pendentes: ${s.pend}\n`;
+  navigator.clipboard.writeText(t).then(() => toast('Copiado!'));
 };
 
-renderSizes();
+// ── Representantes (gerência) ──
+const randomKey = () => {
+  const a = new Uint8Array(16); crypto.getRandomValues(a);
+  return Array.from(a, b => b.toString(16).padStart(2,'0')).join('');
+};
+const baseUrl = () => location.href.split('?')[0].split('#')[0];
+const repLink = r => `${baseUrl()}?rep=${encodeURIComponent(r.id)}&k=${encodeURIComponent(r.key)}&n=${encodeURIComponent(r.name)}`;
+
+function renderReps() {
+  const el = $('repList'); if (!el) return;
+  if (!reps.length) { el.innerHTML = '<p class="empty-home">Nenhum representante cadastrado ainda.</p>'; return; }
+  el.innerHTML = reps.map(r => {
+    const n = orders.filter(o => o.repId === r.id).length;
+    return `<div class="rep-card">
+      <div class="order-client">${esc(r.name)}</div>
+      <div class="order-meta">${n} pedido${n===1?'':'s'} recebido${n===1?'':'s'}</div>
+      <div class="rep-actions">
+        <button class="mini-btn pri" onclick="copyRepLink('${esc(r.id)}')">Copiar link</button>
+        <button class="mini-btn" onclick="whatsRepLink('${esc(r.id)}')">WhatsApp</button>
+        <button class="mini-btn danger" onclick="deleteRep('${esc(r.id)}')">Desativar</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+window.addRep = async () => {
+  const name = $('repName').value.trim();
+  if (name.length < 2) { toast('Informe o nome','var(--red)'); return; }
+  try {
+    await addDoc(repsCol, { name, key: randomKey(), createdAt: Date.now() });
+    $('repName').value = '';
+    toast('Link criado!');
+  } catch(e) { toast('Erro ao criar: ' + e.message,'var(--red)'); }
+};
+window.copyRepLink = id => {
+  const r = reps.find(x => x.id === id); if (!r) return;
+  navigator.clipboard.writeText(repLink(r)).then(() => toast('Link copiado!'));
+};
+window.whatsRepLink = id => {
+  const r = reps.find(x => x.id === id); if (!r) return;
+  const msg = `Olá, ${r.name}! Esse é o seu link para lançar pedidos na GUGĒ Jeans: ${repLink(r)}`;
+  window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank');
+};
+window.deleteRep = async id => {
+  const r = reps.find(x => x.id === id); if (!r) return;
+  if (!confirm(`Desativar o link de ${r.name}? Ele não conseguirá mais enviar pedidos.`)) return;
+  try { await deleteDoc(doc(db,'representantes',id)); toast('Link desativado'); }
+  catch(e) { toast('Erro ao desativar','var(--red)'); }
+};
+
+// ── Representante: enviar pedido ──
+window.sendRepOrder = async () => {
+  const client = $('rClient').value.trim();
+  if (!client)               { toast('Informe o nome do cliente','var(--red)'); return; }
+  if (!forms.r.draft.length) { toast('Adicione ao menos uma peça','var(--red)'); return; }
+  if (!navigator.onLine)     { toast('Sem internet. Tente de novo.','var(--red)'); return; }
+  const btn = $('sendBtn');
+  btn.disabled = true; btn.textContent = 'Enviando...';
+  try {
+    await addDoc(ordersCol, {
+      client, obs: $('rObs').value.trim(),
+      date: new Date().toLocaleDateString('pt-BR'),
+      createdAt: Date.now(),
+      origem: 'representante', repId: REP_ID, repKey: REP_KEY, repName: REP_NAME,
+      visto: false,
+      items: forms.r.draft.map(i => ({ ...i }))
+    });
+    resetForm('r');
+    show('screenRepOk');
+  } catch(e) {
+    console.error(e);
+    toast(e.code === 'permission-denied' ? 'Link inválido ou desativado. Peça um novo.' : 'Erro ao enviar. Tente de novo.', 'var(--red)');
+  } finally {
+    btn.disabled = false; btn.textContent = 'Enviar Pedido para a GUGĒ';
+  }
+};
+window.newRepOrder = () => { resetForm('r'); show('screenRep'); };
+
+// ── Inicialização ──
+$('mForm').innerHTML = formHTML('m', 'Cliente', 'Nome da cliente...');
+$('rForm').innerHTML = formHTML('r', 'Cliente', 'Nome do seu cliente / loja...');
+renderTabs('m'); renderSizes('m'); renderPreview('m');
+renderTabs('r'); renderSizes('r'); renderPreview('r');
+
+if (IS_REP) {
+  // Modo representante: sem login, só envia.
+  $('loadingOverlay').classList.add('hidden');
+  $('repHeaderTag').innerHTML = REP_NAME ? `Representante<br>${esc(REP_NAME)}` : 'Lançar pedido';
+  show('screenRep');
+} else {
+  onAuthStateChanged(auth, user => {
+    $('loadingOverlay').classList.add('hidden');
+    if (user) {
+      $('loginScreen').classList.add('hidden');
+      startListening();
+    } else {
+      if (unsubOrders) { unsubOrders(); unsubOrders = null; }
+      if (unsubReps)   { unsubReps();   unsubReps = null; }
+      orders = []; reps = [];
+      $('loginScreen').classList.remove('hidden');
+      $('loginInput').value = ''; $('loginError').textContent = '';
+    }
+  });
+}
 </script>
 </body>
 </html>
