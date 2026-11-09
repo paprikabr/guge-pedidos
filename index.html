@@ -174,6 +174,16 @@ body { background: var(--cream); color: var(--text); font-family: 'Barlow', sans
 .rep-add button { background: var(--navy); border: none; color: var(--cream); cursor: pointer; font-family: 'Barlow', sans-serif; font-size: .72rem; font-weight: 700; letter-spacing: .1em; padding: 0 14px; text-transform: uppercase; }
 .rep-help { font-size: .68rem; color: var(--muted); line-height: 1.5; padding: 10px 16px 0; }
 
+/* IMPORTAR EXCEL */
+.import-box { background: var(--white); border: 1px dashed var(--border); padding: 10px 11px; }
+.import-actions { display: flex; gap: 6px; flex-wrap: wrap; }
+label.mini-btn, a.mini-btn { display: inline-block; text-decoration: none; }
+.import-msg { font-size: .7rem; line-height: 1.45; margin-top: 8px; }
+.import-msg:empty { display: none; }
+.import-msg.ok b { color: var(--green); }
+.import-msg.err b { color: var(--red); }
+.import-msg ul { margin: 4px 0 0 16px; color: var(--muted); }
+
 /* TELA DO REPRESENTANTE */
 .ok-screen { text-align: center; padding: 70px 28px; }
 .ok-check { width: 64px; height: 64px; border-radius: 50%; background: var(--green); color: #fff; font-size: 2rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 18px; }
@@ -338,6 +348,7 @@ body { background: var(--cream); color: var(--text); font-family: 'Barlow', sans
 
 <div class="toast" id="toast"></div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script type="module">
 import { initializeApp }                          from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword,
@@ -423,7 +434,7 @@ function showSaving() {
 
 // ── Higieniza o que vem do banco (pedidos de representantes são "de fora") ──
 function clean(d, id) {
-  const items = (Array.isArray(d.items) ? d.items : []).slice(0, 200).map(it => {
+  const items = (Array.isArray(d.items) ? d.items : []).slice(0, 300).map(it => {
     const sizes = {}, found = {};
     ORDER.forEach(s => {
       const q = Number(it?.sizes?.[s]);
@@ -485,6 +496,17 @@ function formHTML(f, clientLabel, clientPh) {
     <input class="f-input" type="text" id="${f}Client" maxlength="80" autocomplete="off" placeholder="${clientPh}" />
   </div>
   <div class="f-section">
+    <div class="import-box">
+      <label class="f-label">Pedido grande? Importe do Excel</label>
+      <div class="import-actions">
+        <label class="mini-btn pri" for="${f}File">Importar Excel</label>
+        <input type="file" id="${f}File" accept=".xlsx,.xls,.csv" hidden onchange="importFile('${f}', this)" />
+        <a class="mini-btn" href="Modelo_Pedido_Guge.xlsx" download>Baixar modelo</a>
+      </div>
+      <div class="import-msg" id="${f}ImportMsg"></div>
+    </div>
+  </div>
+  <div class="f-section">
     <label class="f-label">Código / Referência</label>
     <input class="f-input" type="text" id="${f}Code" list="codeList" maxlength="80" autocomplete="off" placeholder="Ex: 0119152 VESTIDO LONGO" />
   </div>
@@ -539,6 +561,7 @@ function resetForm(f) {
   forms[f] = { draft:[], grade:'casual-pg' };
   ['Client','Code','Obs'].forEach(k => $(f+k).value = '');
   renderTabs(f); renderSizes(f); renderPreview(f);
+  const im = $(f+'ImportMsg'); if (im) { im.innerHTML = ''; im.className = 'import-msg'; }
 }
 function refreshCodeList() {
   const set = new Set();
@@ -864,6 +887,112 @@ window.sendRepOrder = async () => {
   }
 };
 window.newRepOrder = () => { resetForm('r'); show('screenRep'); };
+
+// ── Importar pedido do Excel ──
+const SIZE_SET = new Set(ORDER);
+
+function inferGrade(sizes) {
+  const keys = Object.keys(sizes);
+  const letters = ['P','M','G','GG'];
+  const hasLetter = keys.some(k => letters.includes(k));
+  const hasNum    = keys.some(k => !letters.includes(k));
+  if (hasLetter && hasNum) return 'custom';
+  if (hasNum) return (keys.includes('36') || keys.includes('46')) ? 'j3646' : 'j3844';
+  return keys.includes('GG') ? 'casual-pgg' : 'casual-pg';
+}
+
+function parseOrderSheet(rows) {
+  const warnings = [];
+  const hIdx = rows.findIndex(r => Array.isArray(r) &&
+    r.some(c => /^(REFER|C[OÓ]D|PRODUTO)/.test(String(c ?? '').trim().toUpperCase())));
+  if (hIdx < 0) return { error: 'Não encontrei a coluna "Referência". Use o modelo da GUGĒ.' };
+
+  let codeCol = -1;
+  const sizeCols = {};
+  rows[hIdx].forEach((c, i) => {
+    const t = String(c ?? '').trim().toUpperCase();
+    if (!t) return;
+    if (codeCol < 0 && /^(REFER|C[OÓ]D|PRODUTO)/.test(t)) codeCol = i;
+    else if (SIZE_SET.has(t)) sizeCols[t] = i;
+    else warnings.push(`Coluna "${String(c).trim()}" não é um tamanho conhecido — ignorada`);
+  });
+  if (!Object.keys(sizeCols).length) return { error: 'Não encontrei colunas de tamanho (P, M, G, GG, 36 a 46).' };
+
+  const items = [];
+  for (let r = hIdx + 1; r < rows.length; r++) {
+    const row = rows[r];
+    if (!Array.isArray(row)) continue;
+    const line = r + 1;
+    const code = String(row[codeCol] ?? '').trim().replace(/\s+/g, ' ');
+    const sizes = {};
+    Object.entries(sizeCols).forEach(([s, ci]) => {
+      const v = row[ci];
+      if (v === null || v === undefined || String(v).trim() === '') return;
+      const n = Number(String(v).replace(',', '.'));
+      if (!Number.isInteger(n) || n < 0 || n > 999) {
+        warnings.push(`Linha ${line}: quantidade inválida no tamanho ${s} ("${v}")`);
+        return;
+      }
+      if (n > 0) sizes[s] = n;
+    });
+    const hasQty = Object.keys(sizes).length > 0;
+    if (!code) { if (hasQty) warnings.push(`Linha ${line}: tem quantidades mas não tem referência — ignorada`); continue; }
+    if (/^EXEMPLO/i.test(code)) continue;
+    if (!hasQty) { warnings.push(`Linha ${line}: "${code}" sem quantidades — ignorada`); continue; }
+    items.push({ code: code.slice(0, 80), sizes });
+  }
+  return { items, warnings };
+}
+
+function showImportMsg(f, text, warnings, isError) {
+  const el = $(f + 'ImportMsg');
+  el.className = 'import-msg ' + (isError ? 'err' : 'ok');
+  const extra = warnings.length
+    ? `<ul>${warnings.slice(0, 10).map(w => `<li>${esc(w)}</li>`).join('')}${warnings.length > 10 ? `<li>... e mais ${warnings.length - 10} aviso(s)</li>` : ''}</ul>`
+    : '';
+  el.innerHTML = `<b>${esc(text)}</b>${extra}`;
+}
+
+window.importFile = (f, input) => {
+  const file = input.files && input.files[0];
+  if (!file) return;
+  if (typeof XLSX === 'undefined') {
+    showImportMsg(f, 'O leitor de Excel não carregou. Verifique a internet e recarregue a página.', [], true);
+    input.value = '';
+    return;
+  }
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const wb = XLSX.read(e.target.result, { type: 'array' });
+      const sheetName = wb.SheetNames.find(n => n.trim().toLowerCase() === 'pedido') || wb.SheetNames[0];
+      const rows = XLSX.utils.sheet_to_json(wb.Sheets[sheetName], { header: 1, defval: null, raw: true });
+      const res = parseOrderSheet(rows);
+      if (res.error) { showImportMsg(f, res.error, [], true); return; }
+      if (!res.items.length) { showImportMsg(f, 'Nenhuma linha com quantidade foi encontrada.', res.warnings, true); return; }
+
+      const base = Date.now() * 1000;
+      const newItems = res.items.map((it, i) => ({
+        code: it.code,
+        grade: inferGrade(it.sizes),
+        sizes: it.sizes,
+        found: Object.fromEntries(Object.keys(it.sizes).map(s => [s, null])),
+        id: base + i
+      }));
+      forms[f].draft = mergeDuplicates([...forms[f].draft, ...newItems]);
+      const pcs = newItems.reduce((t, it) => t + Object.values(it.sizes).reduce((a, b) => a + b, 0), 0);
+      renderPreview(f); refreshCodeList();
+      showImportMsg(f, `✓ ${newItems.length} linha${newItems.length > 1 ? 's' : ''} · ${pcs} peças importadas. Confira abaixo e salve.`, res.warnings, false);
+    } catch (err) {
+      console.error(err);
+      showImportMsg(f, 'Não consegui ler esse arquivo. Use o modelo .xlsx da GUGĒ.', [], true);
+    } finally {
+      input.value = '';
+    }
+  };
+  reader.onerror = () => { showImportMsg(f, 'Erro ao abrir o arquivo.', [], true); input.value = ''; };
+  reader.readAsArrayBuffer(file);
+};
 
 // ── Inicialização ──
 $('mForm').innerHTML = formHTML('m', 'Cliente', 'Nome da cliente...');
